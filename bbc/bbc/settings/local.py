@@ -20,8 +20,8 @@ DATABASES = {
     }
 }
 
-SOCIAL_AUTH_MYOAUTH_KEY = 'qexcETkxtyuXD3rSS8whIKz8MX8itgr5kO1djRMf'
-SOCIAL_AUTH_MYOAUTH_SECRET = 'GdkWb0hTYbQDzljNhnnNxz5jmw563BNNrohbG7A59o9D1PCHj9RWc39RppFnFOcCtu05Obt38rwQaKqTHI3KGjvEpb2GDPniDeTbhf5WZEkJgXeWiAFalKVcXzZgGZYP'
+SOCIAL_AUTH_MYOAUTH_KEY = ''
+SOCIAL_AUTH_MYOAUTH_SECRET = ''
 SOCIAL_AUTH_MYOAUTH_EXTRA_ARGUMENTS = {'scope': 'blue-button-read-only provider-data-push'}
 HHS_OAUTH_URL = "http://oauth:8000"
 # HHS_OAUTH_URL = "https://cms.oauth2.io"

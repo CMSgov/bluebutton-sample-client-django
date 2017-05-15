@@ -17,8 +17,8 @@ DATABASES = {
 # STATIC_URL = '//static-oauth.npi.io/static-c/'
 
 
-SOCIAL_AUTH_MYOAUTH_KEY = '0viv62YJiiV3YFsq0pOZ6Q5yMJpjhmzKXbmGKcOc'
-SOCIAL_AUTH_MYOAUTH_SECRET = 'fyiFRWOfePo0YgQjKxQIufjsG5kuOvJorbBcgiPN2suIotaRcGQfBuIlX44zu3610Y0V9xy8Ii9504gt48JuhpQY0TPqmAsfSk6SVGdkL8u5sdogaTlbKVljV2GATzDB'
+SOCIAL_AUTH_MYOAUTH_KEY = ''
+SOCIAL_AUTH_MYOAUTH_SECRET = ''
 # the trailing slash is necessary, because python-social-auth does not follow
 # redirects by default.
 HHS_OAUTH_URL = "https://oauth2.npi.io"

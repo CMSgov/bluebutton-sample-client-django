@@ -1,12 +1,12 @@
 from .base import *
 
-HHS_OAUTH_URL = "http://oauth.npi.io"
-MY_AUTHORIZATION_URL = 'http://oauth.npi.io/o/authorize/'
-MY_ACCESS_TOKEN_URL =  'http://oauth.npi.io/o/token/'
-MY_USER_PROFILE_URL =  'http://oauth.npi.io/api/profile/'
+HHS_OAUTH_URL = "https://cms.oauth2.io"
+MY_AUTHORIZATION_URL = 'https://cms.oauth2.io/o/authorize/'
+MY_ACCESS_TOKEN_URL =  'https://cms.oauth2.io/o/token/'
+MY_USER_PROFILE_URL =  'https://cms.oauth.io/api/profile/'
 
-SOCIAL_AUTH_MYOAUTH_KEY = 'f9BL8Q16PRBrsbZocmmDkV5Q03wma0eWouOWx25z'
-SOCIAL_AUTH_MYOAUTH_SECRET = 'tymFpjhaoy8QKrKwm4JSzRtZ1k5RtEQkl9AHSLDM722qeG4ClxjGq076NuAxpEoR4HREeATKr8FCxyz17a2U0R1y0x0u9BuEgPGFMBTCHbBBxAV9dfmSBl6PJInetw7B'
+SOCIAL_AUTH_MYOAUTH_KEY = ''
+SOCIAL_AUTH_MYOAUTH_SECRET = ''
 
 # this is the client id of the application used to obtain tokens
 # with the password flow in the integration tests.
