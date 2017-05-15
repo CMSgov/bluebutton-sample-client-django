@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block Content %}
+
+  <div class="container">
+    
+	    <div class="row">
+        <div class="col-lg-12">
+	      <ol class="breadcrumb">
+	        <li class="active"><a href="">Login</a></li>
+	      </ol>
+        </div>
+     </div>
+
+    <div class="row">
+      <div class="col-lg-10">
+        {% include "include/messages.html" %}
+      </div>
+    </div>
+	  
+     <div class="row text-center">
+        <div class="col-lg-12">
+           <a class="btn btn-primary btn-large" href="{% url 'social:begin' 'myoauth' %}">Login with {{PROPRIETARY_BACKEND_NAME}}.oauth2.io</a>
+		</div>
+	  </div>
+	
+</div>
+	
+{% endblock %}
+

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load bootstrap %}
+{% block Content %}
+
+<div class="container">
+
+    <div class="row">
+      <div class="col-lg-12">
+         <h1 class="page-header">Hello {{user|capfirst}}</h1>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-lg-10">
+        {% include "include/messages.html" %}
+      </div>
+    </div>
+
+
+      <div class="row">
+        <div class="col-lg-12">
+	      <ol class="breadcrumb">
+	        <li class="active"><a href="/">Home</a></li>
+	      </ol>
+        </div>
+      </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+
+
+			<a href="/patient/cms/pull/me"><button type="button" class="btn btn-primary">Get My Personal Health Data</button> </a>
+		  <a href="/patient/djmongo-read"><button type="button" class="btn btn-primary">Djmongo Test Read</button> </a>
+		<a href="/patient/djmongo-write"><button type="button" class="btn btn-primary">Djmongo Test Write</button> </a>
+		   <a href="/provider/fetch-practitioner"><button type="button" class="btn btn-primary">Fetch Practitioner for Update</button> </a>
+		     <a href="/provider/fhir/practitioner/update"><button type="button" class="btn btn-primary">Update Practitioner FHIR</button> </a>
+         <a href="/provider/fhir/practitioner/push"><button type="button" class="btn btn-primary">Create New Practitioner FHIR</button> </a>
+         <a href="/provider/fhir/organization/update"><button type="button" class="btn btn-primary">Update Organization FHIR</button> </a>
+         <a href="/provider/fhir/organization/push"><button type="button" class="btn btn-primary">Create New Organization FHIR</button> </a>
+		     <a href="/provider/pjson/push"><button type="button" class="btn btn-primary">Push Provider JSON</button> </a>
+
+			<!--<a href="{% url "call_read" %}"><button type="button" class="btn btn-primary">Call Read</button> </a>-->
+
+			<!--
+            <form method="post" action="{% url "call_write" %}">
+                {% csrf_token %}
+                {{ form|bootstrap }}
+                <button type="submit" class="btn btn-primary">Call Write</button>
+            </form>
+			-->
+		 </div>
+	   </div>
+ <!--
+       <div class="col-lg-12">
+           <h2>Remote Response</h2>
+           {% if remote_status_code %}<p>Status Code: {{ remote_status_code }}</p>{% endif %}
+           {{ remote_content|default:"No response" }}
+       </div>
+-->
+    </div><!-- /.container -->
+
+
+{% endblock %}

@@ -3,3 +3,4 @@
 db/*
 *~
 *.komodoproject
+.DS_Store
