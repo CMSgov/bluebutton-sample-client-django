@@ -24,6 +24,6 @@ urlpatterns = [
     url(r'^patient/',       include('apps.patient.urls')),
     url(r'^provider/',      include('apps.provider.urls')),
     url(r'^social-auth/',   include('social.apps.django_app.urls', namespace='social')),
-    url(r'^$',               include('apps.home.urls')),
+    url(r'^',               include('apps.home.urls')),
 
 ]

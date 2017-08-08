@@ -145,37 +145,26 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-MIN_PASSWORD_LEN = 8
+
 AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 AUTHENTICATION_BACKENDS = (
             'django.contrib.auth.backends.ModelBackend',
-            'apps.accounts.oauth_backends.myoauth.MyOAuthOAuth2'
+            'social_core.backends.instagram.InstagramOAuth2',
+            'apps.accounts.oauth_backends.myokta.MyOktaOAuth2'
             )
-
 
 
 # python-social-auth settings
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
-# instagram oauth
-SOCIAL_AUTH_INSTAGRAM_KEY=''
-SOCIAL_AUTH_INSTAGRAM_SECRET=''
-SOCIAL_AUTH_INSTAGRAM_EXTRA_ARGUMENTS = {'scope': 'likes comments relationships'}
 
-
-# myoauth oauth2
-SOCIAL_AUTH_MYOAUTH_KEY = ''
-SOCIAL_AUTH_MYOAUTH_SECRET = ''
 SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
 SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
 PROPRIETARY_BACKEND_NAME = 'myoauth'
 SOCIAL_AUTH_ALWAYS_ASSOCIATE = True
 # the trailing slash is necessary, because python-social-auth does not follow
 # redirects by default.
-HHS_OAUTH_URL = 'http://oauth:8000/'
-MY_AUTHORIZATION_URL = 'http://oauth:8000/o/authorize/'
-MY_ACCESS_TOKEN_URL =  'http://oauth:8000/o/token/'
-MY_USER_PROFILE_URL =  'http://oauth:8000/connect/userinfo'
+HHS_OAUTH_URL = 'http://localhost:8000/'
 LOGIN_URL          = '/accounts/login'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_ERROR_URL    = '/accounts/login-error'
@@ -197,7 +186,3 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.debug.debug'
 )
 
-try:
-    from local import *
-except:
-    pass
