@@ -21,13 +21,15 @@ DATABASES = {
 }
 
 # instagram oauth
-SOCIAL_AUTH_INSTAGRAM_KEY='38b495f6fa264851bd541ce183a58931'
-SOCIAL_AUTH_INSTAGRAM_SECRET='2eeed20dab5e4241901e8afb518c4444'
+SOCIAL_AUTH_INSTAGRAM_KEY=''
+SOCIAL_AUTH_INSTAGRAM_SECRET=''
 SOCIAL_AUTH_INSTAGRAM_EXTRA_ARGUMENTS = {'scope': 'likes comments relationships'}
-# Sample Okat
-SOCIAL_AUTH_MYOKTA_KEY = '0oabhp13fgETSkKGF0h7'
-SOCIAL_AUTH_MYOKTA_SECRET = 'KiarYxiJep1qszWfx3RoPEFbjMpcpXUmg-eaJhLM'
-SOCIAL_AUTH_MYOKTA_EXTRA_ARGUMENTS = {'scope': 'openid profile'}
+
+
+# # Sample Okta - currently;y not working.
+# SOCIAL_AUTH_MYOKTA_KEY = ''
+# SOCIAL_AUTH_MYOKTA_SECRET = ''
+# SOCIAL_AUTH_MYOKTA_EXTRA_ARGUMENTS = {'scope': 'openid profile'}
 
 
 

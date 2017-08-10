@@ -149,8 +149,10 @@ STATICFILES_FINDERS = (
 AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 AUTHENTICATION_BACKENDS = (
             'django.contrib.auth.backends.ModelBackend',
-            'social_core.backends.instagram.InstagramOAuth2',
-            'apps.accounts.oauth_backends.myokta.MyOktaOAuth2'
+            # 'social_core.backends.instagram.InstagramOAuth2',
+            # 'apps.accounts.oauth_backends.myokta.MyOktaOAuth2'
+            'apps.accounts.oauth_backends.myoauth.MyOAuthOAuth2'
+            # 'apps.accounts.oauth_backends.myokta.MyOktaOAuth2'
             )
 
 
@@ -164,7 +166,7 @@ PROPRIETARY_BACKEND_NAME = 'myoauth'
 SOCIAL_AUTH_ALWAYS_ASSOCIATE = True
 # the trailing slash is necessary, because python-social-auth does not follow
 # redirects by default.
-HHS_OAUTH_URL = 'http://localhost:8000/'
+HHS_OAUTH_URL = 'http://cms.oauuth2.io'
 LOGIN_URL          = '/accounts/login'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_ERROR_URL    = '/accounts/login-error'
