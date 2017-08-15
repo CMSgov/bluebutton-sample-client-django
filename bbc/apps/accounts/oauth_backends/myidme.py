@@ -31,8 +31,6 @@ class MyIDMMEOAuth2(BaseOAuth2):
         """
         Return user details from MYOAUTH account
         """
-        
-        print(response)
         return {
             'username': response.get('sub'),
             'first_name': response.get('given_name'),

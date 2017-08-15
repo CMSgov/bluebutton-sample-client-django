@@ -6,21 +6,20 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 
 
-class MyOAuthOAuth2(BaseOAuth2):
-    name                = settings.PROPRIETARY_BACKEND_NAME
+class OAuth2ioOAuth2(BaseOAuth2):
+    name = getattr(settings, 'PROPRIETARY_BACKEND_NAME', "oauth2io")
+    OAUTH2IO_HOST = getattr(settings, 'OAUTH2IO_HOST', "https://dev.bluebutton.cms.fhirservice.net")
     ID_KEY = 'email'
-    AUTHORIZATION_URL   = settings.MY_AUTHORIZATION_URL  #  'http://127.0.0.1:8000/o/authorize'
-    ACCESS_TOKEN_URL    = settings.MY_ACCESS_TOKEN_URL   #'http://127.0.0.1:8000/o/token'
+    AUTHORIZATION_URL   = OAUTH2IO_HOST + '/o/authorize/'
+    ACCESS_TOKEN_URL    = OAUTH2IO_HOST + '/o/token/'
     ACCESS_TOKEN_METHOD = 'POST'
 
     def get_user_profile_url(self):
         """
         Return the url to the user profile endpoint.
         """
-        user_profile_url = getattr(settings, 'MY_USER_PROFILE_URL', None)
-        if not user_profile_url:
-            raise ImproperlyConfigured("'MY_USER_PROFILE_URL' setting should be defined.")
-
+        user_profile_url = getattr(settings, 'OAUTH2IO_HOST', "https://dev.bluebutton.cms.fhirservice.net") \
+                                    + '/connect/userinfo'
         return user_profile_url
 
     def get_user_id(self, details, response):
@@ -29,7 +28,7 @@ class MyOAuthOAuth2(BaseOAuth2):
 
     def get_user_details(self, response):
         """
-        Return user details from MYOAUTH account
+        Return user details from OAUTH2IO account
         """
         return {
             'username': response.get('sub'),

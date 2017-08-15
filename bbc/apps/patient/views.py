@@ -20,11 +20,12 @@ from requests_oauthlib import OAuth2
 def bbof_pull_me(request):
     context = {'name': 'Blue Button on FHIR'}
     # first we get the token used to login
-    token = request.user.social_auth.get(provider=settings.PROPRIETARY_BACKEND_NAME).access_token
-    auth = OAuth2(settings.SOCIAL_AUTH_MYOAUTH_KEY,
+    token = request.user.social_auth.get(provider='oauth2io').access_token
+    auth = OAuth2(settings.SOCIAL_AUTH_OAUTH2IO_KEY,
                   token={'access_token': token, 'token_type': 'Bearer'})
     # next we call the remote api
-    url = urljoin(settings.HHS_OAUTH_URL, '/monfhir/oauth2/Patient/5863c9705170aa056735d27d')
+    url = urljoin(getattr(settings, 'OAUTH2IO_HOST', "https://dev.bluebutton.cms.fhirservice.net"),
+                  '/bluebutton/fhir/v1/ExplanationOfBenefit/?patient=pyapps')
     print(url)
     response = requests.get(url, auth=auth)
     print(request.path)
