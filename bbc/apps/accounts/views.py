@@ -21,7 +21,7 @@ def my_logout(request):
 @require_GET    
 def my_login(request):
     #this is a GET
-    return render(request,'login.html', {'PROPRIETARY_BACKEND_NAME': settings.PROPRIETARY_BACKEND_NAME})
+    return render(request,'login.html', {'PROPRIETARY_BACKEND_NAME': 'myoauth2'})
 
 
 
