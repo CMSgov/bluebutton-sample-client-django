@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load bootstrap %}
+{% block Content %}
+
+<div class="container">
+
+    <div class="row">
+      <div class="col-lg-10">
+        {% include "include/messages.html" %}
+      </div>
+    </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+	      <ol class="breadcrumb">
+	        <li class="active"><a href="/">Home</a></li>
+	      </ol>
+        </div>
+      </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+
+           This is a sample Blue Button Client. Please refer to the <a href="https://hhsidealab.github.io/bluebutton-developer-help/">Developer Documentation</a> and the
+<a href="https://dev.bluebutton.cms.fhirservice.net/devdocs/?baseUrl=https://dev.bluebutton.cms.fhirservice.net/devdocs_bbonfhirapi/bbonfhirapi_swagger.yaml">Swagger documentation</a> for information.
+        </div>
+      </div>
+		
+	      <div class="row">
+        <div class="col-lg-12">
+	  
+     <div class="row text-center">
+        <div class="col-lg-12">
+			<br><br>
+           <a class="btn btn-primary btn-large" href="{% url 'social:begin' 'oauth2io' %}">Login with {{settings.OAUTH2_PROVIDER_NAME}}</a>
+
+		</div>
+	  </div>
+
+		 </div>
+	   </div>
+
+    </div><!-- /.container -->
+
+
+{% endblock %}

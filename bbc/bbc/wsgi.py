@@ -1,19 +1,17 @@
 """
-WSGI config for hhs_oauth_client project.
+WSGI config for bbc project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
 For more information on this file, see
-https://docs.djangoproject.com/en/1.8/howto/deployment/wsgi/
+https://docs.djangoproject.com/en/1.9/howto/deployment/wsgi/
 """
-
-
-
-import os,sys
+import os
+import sys
 from django.core.wsgi import get_wsgi_application
 
-sys.path.append('/home/ubuntu/django-projects/hhs_oauth_client')
+__author__ = "Alan Viars"
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "hhs_oauth_client.settings.production")
-
+sys.path.append('/home/ubuntu/django-projects/django_bluebutton_client/bbc')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bbc.settings.production")
 application = get_wsgi_application()

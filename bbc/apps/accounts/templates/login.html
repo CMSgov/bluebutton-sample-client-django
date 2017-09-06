@@ -18,12 +18,17 @@
         {% include "include/messages.html" %}
       </div>
     </div>
+	
+	
+	
 	  
      <div class="row text-center">
         <div class="col-lg-12">
-           <a class="btn btn-primary btn-large" href="{% url 'social:begin' 'oauth2io' %}">Login with OAuth2.io</a>
+           <a class="btn btn-primary btn-large" href="{% url 'social:begin' 'oauth2io' %}">Login with {{settings.OAUTH2_PROVIDER_NAME}}</a>
 		</div>
 	  </div>
+
+
 
 		
 </div>
