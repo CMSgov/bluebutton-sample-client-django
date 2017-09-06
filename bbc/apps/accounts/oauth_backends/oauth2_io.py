@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from social.backends.oauth import BaseOAuth2
+from social_core.backends.oauth import BaseOAuth2
 
 from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import reverse
@@ -8,18 +8,26 @@ from django.conf import settings
 
 class OAuth2ioOAuth2(BaseOAuth2):
     name = getattr(settings, 'PROPRIETARY_BACKEND_NAME', "oauth2io")
-    OAUTH2IO_HOST = getattr(settings, 'OAUTH2IO_HOST', "https://dev.bluebutton.cms.fhirservice.net")
+    OAUTH2IO_HOST = getattr(
+        settings,
+        'OAUTH2IO_HOST',
+        "https://dev.bluebutton.cms.fhirservice.net")
+    #OAUTH2IO_HOST = getattr(settings, 'OAUTH2IO_HOST', "http://oauth2:8000")
     ID_KEY = 'email'
-    AUTHORIZATION_URL   = OAUTH2IO_HOST + '/o/authorize/'
-    ACCESS_TOKEN_URL    = OAUTH2IO_HOST + '/o/token/'
+    AUTHORIZATION_URL = OAUTH2IO_HOST + '/o/authorize/'
+    ACCESS_TOKEN_URL = OAUTH2IO_HOST + '/o/token/'
     ACCESS_TOKEN_METHOD = 'POST'
 
     def get_user_profile_url(self):
         """
         Return the url to the user profile endpoint.
         """
-        user_profile_url = getattr(settings, 'OAUTH2IO_HOST', "https://dev.bluebutton.cms.fhirservice.net") \
-                                    + '/connect/userinfo'
+        user_profile_url = getattr(
+            settings,
+            'OAUTH2IO_HOST',
+            "https://dev.bluebutton.cms.fhirservice.net") + '/connect/userinfo'
+        #user_profile_url = getattr(settings, 'OAUTH2IO_HOST', "http://oauth2:8000") \
+        #                            + '/connect/userinfo'
         return user_profile_url
 
     def get_user_id(self, details, response):
@@ -41,4 +49,6 @@ class OAuth2ioOAuth2(BaseOAuth2):
         """
         Loads user data from service
         """
-        return self.get_json(self.get_user_profile_url(), params={'access_token': access_token})
+        return self.get_json(
+            self.get_user_profile_url(), params={
+                'access_token': access_token})

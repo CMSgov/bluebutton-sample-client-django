@@ -2,8 +2,8 @@ from .base import *
 
 HHS_OAUTH_URL = "https://cms.oauth2.io"
 MY_AUTHORIZATION_URL = 'https://cms.oauth2.io/o/authorize/'
-MY_ACCESS_TOKEN_URL =  'https://cms.oauth2.io/o/token/'
-MY_USER_PROFILE_URL =  'https://cms.oauth.io/api/profile/'
+MY_ACCESS_TOKEN_URL = 'https://cms.oauth2.io/o/token/'
+MY_USER_PROFILE_URL = 'https://cms.oauth.io/api/profile/'
 
 SOCIAL_AUTH_MYOAUTH_KEY = ''
 SOCIAL_AUTH_MYOAUTH_SECRET = ''

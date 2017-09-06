@@ -4,3 +4,4 @@ db/*
 *~
 *.komodoproject
 .DS_Store
+bbc/bbc/settings/local.py

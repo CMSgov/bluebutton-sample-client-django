@@ -13,10 +13,9 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from django.contrib.messages import constants as messages
-from django.conf import global_settings
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR = os.path.join( BASE_DIR, '..')
+BASE_DIR = os.path.join(BASE_DIR, '..')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -27,7 +26,7 @@ SECRET_KEY = 'piehme*+^#hylq8uz2eszps%o!5!+*#1@+*83gmp$o(u3%!ldp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*',]
+ALLOWED_HOSTS = ['*', ]
 
 
 # Application definition
@@ -44,8 +43,7 @@ INSTALLED_APPS = (
     'apps.home',
     'apps.remotecalls',
     'apps.patient',
-    'apps.provider',
-    'social.apps.django_app.default',
+    'social_django',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -57,7 +55,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-     'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 )
 ROOT_URLCONF = 'bbc.urls'
 
@@ -65,8 +63,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-                 os.path.join(BASE_DIR, 'templates'),
-                 ],
+            os.path.join(BASE_DIR, 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,10 +72,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social.apps.django_app.context_processors.backends',
-                'social.apps.django_app.context_processors.login_redirect'
-
-
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
+                'django_settings_export.settings_export',
             ],
         },
     },
@@ -86,15 +83,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bbc.wsgi.application'
 
 
-MESSAGE_TAGS ={ messages.DEBUG:   'debug',
-                messages.INFO:    'info',
+MESSAGE_TAGS = {messages.DEBUG: 'debug',
+                messages.INFO: 'info',
                 messages.SUCCESS: 'success',
                 messages.WARNING: 'warning',
-                messages.ERROR:   'danger'
+                messages.ERROR: 'danger'
                 }
-
-
-
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -142,49 +136,51 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 
 AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 AUTHENTICATION_BACKENDS = (
-            'django.contrib.auth.backends.ModelBackend',
-            
-            # 'social_core.backends.instagram.InstagramOAuth2',
-            'apps.accounts.oauth_backends.oauth2_io.OAuth2ioOAuth2'
-            # 'apps.accounts.oauth_backends.myokta.MyOktaOAuth2'
-            )
+    'django.contrib.auth.backends.ModelBackend',
+    'apps.accounts.oauth_backends.oauth2_io.OAuth2ioOAuth2')
 
 
 # python-social-auth settings
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_OAUTH2IO_KEY = ''
 SOCIAL_AUTH_OAUTH2IO_SECRET = ''
-SOCIAL_AUTH_OAUTH2IO_EXTRA_ARGUMENTS = {'scope': 'blue-button-read-only provider-data-push'}
+SOCIAL_AUTH_OAUTH2IO_SCOPE = []
+OAUTH2IO_HOST = "http://oauth2:8000"
 
-SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
-SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
+
+#SOCIAL_AUTH_STRATEGY = 'social_django.strategy.DjangoStrategy'
+#SOCIAL_AUTH_STORAGE = 'social_django.storage.BaseDjangoStorage'
 SOCIAL_AUTH_ALWAYS_ASSOCIATE = True
 # the trailing slash is necessary, because python-social-auth does not follow
 # redirects by default.
-LOGIN_URL          = '/accounts/login'
+LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'
-LOGIN_ERROR_URL    = '/accounts/login-error'
-
+LOGIN_ERROR_URL = '/accounts/login-error'
+HOSTNAME_URL = "http://bbc:8001"
 
 SOCIAL_AUTH_PIPELINE = (
-    'social.pipeline.social_auth.social_details',
-    'social.pipeline.social_auth.social_uid',
-    'social.pipeline.social_auth.auth_allowed',
-    'social.pipeline.social_auth.social_user',
-    'social.pipeline.user.get_username',
-    'social.pipeline.mail.mail_validation',
-    'social.pipeline.user.create_user',
-    'social.pipeline.social_auth.associate_user',
-    'social.pipeline.debug.debug',
-    'social.pipeline.social_auth.load_extra_data',
-    'social.pipeline.user.user_details',
-    'social.pipeline.social_auth.associate_by_email',
-    'social.pipeline.debug.debug'
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.mail.mail_validation',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.debug.debug',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+    'social_core.pipeline.debug.debug'
 )
 
+OAUTH2_PROVIDER_NAME = "CMS"
+SETTINGS_EXPORT = [
+    'OAUTH2_PROVIDER_NAME',
+    'OAUTH2IO_HOST',
+]
