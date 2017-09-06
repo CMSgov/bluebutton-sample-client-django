@@ -4,3 +4,5 @@ db/*
 *~
 *.komodoproject
 .DS_Store
+bbc/bbc/settings/local.py
+bbc/apps/accounts/oauth_backends/okta.py

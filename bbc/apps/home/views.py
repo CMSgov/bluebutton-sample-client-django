@@ -12,8 +12,18 @@ from apps.remotecalls.forms import JsonForm
 def authenticated_home(request):
 
     name = _("Authenticated Home")
-    #this is a GET
-    context= {'name':name,
-              'form': JsonForm(),
-              }
+    # this is a GET
+    context = {'name': name,
+               'form': JsonForm(),
+               }
     return render(request, 'authenticated-home.html', context)
+
+
+def public_home(request):
+    return render(request, 'public-home.html', {})
+
+
+def home(request):
+    if request.user.is_authenticated:
+        return authenticated_home(request)
+    return public_home(request)

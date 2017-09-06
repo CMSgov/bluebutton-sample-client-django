@@ -1,12 +1,10 @@
 from .base import *
 
-HHS_OAUTH_URL = "https://cms.oauth2.io"
-MY_AUTHORIZATION_URL = 'https://cms.oauth2.io/o/authorize/'
-MY_ACCESS_TOKEN_URL =  'https://cms.oauth2.io/o/token/'
-MY_USER_PROFILE_URL =  'https://cms.oauth.io/api/profile/'
+OAUTH2IO_HOST = "https://dev.bluebutton.cms.fhirservice.net"
+OAUTH2_PROVIDER_NAME = "CMS"
 
-SOCIAL_AUTH_MYOAUTH_KEY = ''
-SOCIAL_AUTH_MYOAUTH_SECRET = ''
+SOCIAL_AUTH_OAUTH2IO_KEY = ''
+SOCIAL_AUTH_OAUTH2IO_SECRET = ''
 
 # this is the client id of the application used to obtain tokens
 # with the password flow in the integration tests.
@@ -20,5 +18,5 @@ TEST_INTEGRATION_WRITE_CLIENT_ID = 'test_app_write'
 
 # this env variable is needed by oauthlib to disable the SSL
 # check while testing, because the testing server doesn't use SSL
-import os
-os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+# import os
+# os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'

@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import patterns, include, url
+from django.conf.urls import url
 from .views import *
 
 
-urlpatterns = patterns('',
-    url(r'', authenticated_home, name="home"),
+urlpatterns = [
+    url(r'', home, name="home"),
+]
 
-    )
