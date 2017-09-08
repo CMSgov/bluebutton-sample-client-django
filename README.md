@@ -1,5 +1,5 @@
 Blue Button Sample Client Application - Django Version
-=======================================================
+======================================================
 
 ## Introduction
 
@@ -45,6 +45,6 @@ To run the tests against https://dev.bluebutton.cms.fhirservice.net use:
 
     python manage.py test --settings=bbc.settings.test
 
-To run the tests against a local server instance (http://localhost:8000) use:
+To run the tests against a local OAuth2/FHIR server instance (http://localhost:8000) use:
 
     python manage.py test --settings=bbc.settings.test_local
