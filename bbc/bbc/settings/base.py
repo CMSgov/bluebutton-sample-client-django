@@ -43,7 +43,6 @@ INSTALLED_APPS = (
     'bootstrapform',
     'apps.accounts',
     'apps.home',
-    'apps.remotecalls',
     'apps.patient',
     'social_django',
 )
