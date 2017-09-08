@@ -154,7 +154,7 @@ SOCIAL_AUTH_OAUTH2IO_SECRET = ''
 SOCIAL_AUTH_OAUTH2IO_SCOPE = []
 OAUTH2IO_HOST = "https://dev.bluebutton.cms.fhirservice.net"
 OAUTH2_PROVIDER_NAME = "CMS"
-APP_TITLE = "Blue Putton Client Example"
+APP_TITLE = "Blue Button Client Example"
 SOCIAL_AUTH_ALWAYS_ASSOCIATE = True
 # the trailing slash is necessary, because python-social-auth does not follow
 # redirects by default.
