@@ -5,3 +5,5 @@ python-social-auth
 requests
 requests_oauthlib<0.6
 pdt
+django-settings-export
+social-auth-app-django

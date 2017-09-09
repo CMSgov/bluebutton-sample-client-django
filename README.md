@@ -16,7 +16,7 @@ Please consider improving this code with your contributions. Pull requests welco
 
     git clone https://github.com/hhsidealab/django_blubutton_client.git
     cd django_blubutton_client/bbc
-    pip install -r requirements/requirements.txt
+    pip install -r requirements/requirements.in
     mkdir db
     python manage.py migrate
     python manage.py runserver
