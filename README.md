@@ -18,8 +18,8 @@ Please consider improving this code with your contributions. Pull requests welco
     cd django_blubutton_client/bbc
     pip install -r requirements/requirements.in
     mkdir db
-    python manage.py migrate
-    python manage.py runserver
+    python manage.py migrate --settings bbc.settings.base
+    python manage.py runserver --settings bbc.settings.base
 
 ## Set and Adjust your Settings.
 
