@@ -4,5 +4,6 @@ db/*
 *~
 *.komodoproject
 .DS_Store
-bbc/bbc/settings/local.py
+bbc/venv
 bbc/apps/accounts/oauth_backends/okta.py
+bbc/bbc/settings/local.py
