@@ -14,7 +14,7 @@ Please consider improving this code with your contributions. Pull requests welco
 
 ## Basic Setup
 
-    git clone https://github.com/hhsidealab/django_blubutton_client.git
+    git clone https://github.com/HHSIDEAlab/django_bluebutton_client.git
     cd django_blubutton_client/bbc
     pip install -r requirements/requirements.in
     mkdir db
