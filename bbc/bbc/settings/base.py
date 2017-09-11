@@ -31,7 +31,6 @@ SECRET_KEY = 'piehme*+^#hylq8uz2eszps%o!5!+*#1@+*83gmp$o(u3%!ldp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool_env(env('DJANGO_DEBUG', False))
 
-
 ALLOWED_HOSTS = ['*', ]
 
 
@@ -98,10 +97,19 @@ MESSAGE_TAGS = {messages.DEBUG: 'debug',
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+DBPATH = os.path.join(BASE_DIR, 'db/db.db')
 DATABASES = {
     'default': {
+        # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # Or path to database file if using sqlite3.
+        'NAME': DBPATH,
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': '',
+        # Set to empty string for default. Not used with sqlite3.
+        'PORT': '',
     }
 }
 
