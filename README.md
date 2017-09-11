@@ -16,8 +16,9 @@ Please consider improving this code with your contributions. Pull requests welco
 
     git clone https://github.com/HHSIDEAlab/django_bluebutton_client.git
     cd django_blubutton_client/bbc
+    python -m venv venv
+    source venv/bin/activate
     pip install -r requirements/requirements.in
-    mkdir db
     python manage.py migrate --settings bbc.settings.base
     python manage.py runserver --settings bbc.settings.base
 
@@ -36,7 +37,7 @@ You can override the host with which your are communicating by adjusting these s
 If you change the `OAUTH2IO_HOST` to something non https (for testing), then you need to
 tell the oauthlib to operate in an insecure mode like so.
 
-    import os 
+    import os
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 ## Running the Tests
