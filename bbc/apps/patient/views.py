@@ -2,6 +2,8 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 import json
 
+import logging
+
 try:
     from urllib.parse import urljoin
 except ImportError:
@@ -13,6 +15,8 @@ from django.shortcuts import render
 from collections import OrderedDict
 import requests
 from requests_oauthlib import OAuth2
+
+logger = logging.getLogger('hhs_server.%s' % __name__)
 
 
 @login_required
@@ -28,7 +32,8 @@ def bbof_get_eob(request):
             settings,
             'OAUTH2IO_HOST',
             "https://dev.bluebutton.cms.fhirservice.net"),
-        '/protected/bluebutton/fhir/v1/ExplanationOfBenefit/?patient=%s' % (request.user.username))
+        '/protected/bluebutton/fhir/v1/ExplanationOfBenefit/')
+    # ?patient=%s % (request.user.username)
     print("EOB URL", url)
     response = requests.get(url, auth=auth)
 
@@ -44,7 +49,7 @@ def bbof_get_eob(request):
     # print(content)
 
     context['remote_status_code'] = response.status_code
-    context['remote_content'] = content
+    context['remote_content'] = json.dumps(content, indent=4)
     return render(request, 'bbof.html', context)
 
 
@@ -61,7 +66,8 @@ def bbof_get_coverage(request):
             settings,
             'OAUTH2IO_HOST',
             "https://dev.bluebutton.cms.fhirservice.net"),
-        '/protected/bluebutton/fhir/v1/Coverage/?patient=%s?_format=json' % request.user.username)
+        '/protected/bluebutton/fhir/v1/Coverage/?_format=json')
+    # patient = % s? request.user.username
     response = requests.get(url, auth=auth)
 
     if response.status_code in (200, 404):
@@ -75,7 +81,7 @@ def bbof_get_coverage(request):
     # print(content)
 
     context['remote_status_code'] = response.status_code
-    context['remote_content'] = content
+    context['remote_content'] = json.dumps(content, indent=4)
     return render(request, 'bbof.html', context)
 
 
@@ -92,8 +98,13 @@ def bbof_get_patient(request):
             settings,
             'OAUTH2IO_HOST',
             "https://dev.bluebutton.cms.fhirservice.net"),
-        '/protected/bluebutton/fhir/v1/Patient/%s?_format=json' %
-        (request.user.username))
+        '/protected/bluebutton/fhir/v1/Patient/'
+        '?_format=json')
+
+        # % (request.user.username)
+
+    logging.debug("calling FHIR Service with %s" % url)
+
     response = requests.get(url, auth=auth)
 
     if response.status_code in (200, 404):
@@ -105,7 +116,7 @@ def bbof_get_patient(request):
         content = response.content
 
     context['remote_status_code'] = response.status_code
-    context['remote_content'] = content
+    context['remote_content'] = json.dumps(content, indent=4)
     return render(request, 'bbof.html', context)
 
 
@@ -129,7 +140,7 @@ def djmongo_read(request):
         content = response.json()
 
     context['remote_status_code'] = response.status_code
-    context['remote_content'] = content
+    context['remote_content'] = json.dumps(content, indent=4)
     return render(request, 'bbof.html', context)
 
 
@@ -155,5 +166,5 @@ def djmongo_write(request):
     else:
         content = {'error': 'server error'}
     context['remote_status_code'] = response.status_code
-    context['remote_content'] = content
+    context['remote_content'] = json.dumps(content, indent=4)
     return render(request, 'response.html', context)
