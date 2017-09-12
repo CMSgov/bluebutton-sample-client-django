@@ -8,7 +8,6 @@ It demonstrates the OAuth2 Server Side web application flow where a `client_secr
 
 ## Status and Contributing
 
-This application has been tested using Python 3.5.1 and Django 1.10.
 The application is in active development so check back often for updates.
 Please consider improving this code with your contributions. Pull requests welcome ;)
 
@@ -16,8 +15,19 @@ Please consider improving this code with your contributions. Pull requests welco
 
     git clone https://github.com/HHSIDEAlab/django_bluebutton_client.git
     cd django_blubutton_client/bbc
+
+While not required, using `virtualenv` is a good idea. 
+The following commands work for Python 3+. Please search `virtualenv` 
+to fine eqivilent commands to install and setup `virtualenv` for Python 2.7.
+
+
     python -m venv venv
     source venv/bin/activate
+
+The following command assumes a `virtualenv` was created and activated. 
+If you aren't using `virtualenv`, then you may need to put `sudo` in 
+front of the following `pip` command.
+
     pip install -r requirements/requirements.in
     cp bbc/settings/local_sample.py bbc/settings/local.py
     python manage.py migrate --settings bbc.settings.local
@@ -35,11 +45,11 @@ you'll need to set up an application. Log in to your new account, and select
 "Applications" -> "Applications You Created" -> "Register New Application". From
 here, you can fill out the form with the following options:
 
-    Scope: [at least one option]
+    Scope: [you likely want to select all avaialable]
     Name: [your choice]
     Client type: Confidential
-    Authorization grant type: Authorization code
-    Redirect uris: http://localhost:8000/social-auth/complete/oauth2io
+    Authorization grant type: Authorization Code
+    Redirect uris: http://localhost:8000/social-auth/complete/oauth2io/
 
 Once you submit the form, you should receive an application key and secret that
 can be be added to the bbc/settings/local.py file you created above, overwriting
