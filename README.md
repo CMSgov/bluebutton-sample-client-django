@@ -45,7 +45,7 @@ you'll need to set up an application. Log in to your new account, and select
 "Applications" -> "Applications You Created" -> "Register New Application". From
 here, you can fill out the form with the following options:
 
-    Scope: [you likely want to select all avaialable]
+    Scope: [you likely want to select all available]
     Name: [your choice]
     Client type: Confidential
     Authorization grant type: Authorization Code
