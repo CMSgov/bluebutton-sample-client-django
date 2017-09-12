@@ -38,7 +38,11 @@ def bbof_get_eob(request):
     response = requests.get(url, auth=auth)
 
     if response.status_code in (200, 404):
-        content = response.json()
+        if response.json():
+            content = json.dumps(response.json(), indent=4)
+        else:
+            content = {'error': 'problem reading content.'}
+
     elif response.status_code == 403:
         content = {'error': 'No read capability'}
         content = response.content
@@ -49,7 +53,7 @@ def bbof_get_eob(request):
     # print(content)
 
     context['remote_status_code'] = response.status_code
-    context['remote_content'] = json.dumps(content, indent=4)
+    context['remote_content'] = content
     return render(request, 'bbof.html', context)
 
 
@@ -71,7 +75,11 @@ def bbof_get_coverage(request):
     response = requests.get(url, auth=auth)
 
     if response.status_code in (200, 404):
-        content = response.json()
+        if response.json():
+            content = json.dumps(response.json(), indent=4)
+        else:
+            content = {'error': 'problem reading content.'}
+
     elif response.status_code == 403:
         content = {'error': 'No read capability'}
         content = response.content
@@ -81,7 +89,7 @@ def bbof_get_coverage(request):
     # print(content)
 
     context['remote_status_code'] = response.status_code
-    context['remote_content'] = json.dumps(content, indent=4)
+    context['remote_content'] = content
     return render(request, 'bbof.html', context)
 
 
@@ -108,7 +116,10 @@ def bbof_get_patient(request):
     response = requests.get(url, auth=auth)
 
     if response.status_code in (200, 404):
-        content = response.json()
+        if response.json():
+            content = json.dumps(response.json(), indent=4)
+        else:
+            content = {'error': 'problem reading content.'}
     elif response.status_code == 403:
         content = {'error': 'No read capability'}
         content = response.content
@@ -116,7 +127,7 @@ def bbof_get_patient(request):
         content = response.content
 
     context['remote_status_code'] = response.status_code
-    context['remote_content'] = json.dumps(content, indent=4)
+    context['remote_content'] = content
     return render(request, 'bbof.html', context)
 
 
@@ -133,14 +144,18 @@ def djmongo_read(request):
         '/djm/search/api/oauth2/nppes/pjson/pjson2.json')
     response = requests.get(url, auth=auth)
     if response.status_code in (200, 404):
-        content = response.json()
+        if response.json():
+            content = json.dumps(response.json(), indent=4)
+        else:
+            content = {'error': 'problem reading content.'}
+
     elif response.status_code == 403:
         content = {'error': 'No read capability'}
     else:
         content = response.json()
 
     context['remote_status_code'] = response.status_code
-    context['remote_content'] = json.dumps(content, indent=4)
+    context['remote_content'] = content
     return render(request, 'bbof.html', context)
 
 
@@ -166,5 +181,5 @@ def djmongo_write(request):
     else:
         content = {'error': 'server error'}
     context['remote_status_code'] = response.status_code
-    context['remote_content'] = json.dumps(content, indent=4)
+    context['remote_content'] = content
     return render(request, 'response.html', context)
