@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from getenv import env
 from django.contrib.messages import constants as messages
+
+from .utils import bool_env 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.join(BASE_DIR, '..')
@@ -26,7 +29,7 @@ __author__ = "Alan Viars"
 SECRET_KEY = 'piehme*+^#hylq8uz2eszps%o!5!+*#1@+*83gmp$o(u3%!ldp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool_env(env('DJANGO_DEBUG', False))
 
 ALLOWED_HOSTS = ['*', ]
 
@@ -127,7 +130,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'collectedstatic')
+STATIC_ROOT = os.path.join(BASE_DIR, 'collectstatic')
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"

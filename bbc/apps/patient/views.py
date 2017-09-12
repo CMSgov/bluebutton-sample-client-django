@@ -2,6 +2,8 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 import json
 
+import logging
+
 try:
     from urllib.parse import urljoin
 except ImportError:
@@ -13,6 +15,8 @@ from django.shortcuts import render
 from collections import OrderedDict
 import requests
 from requests_oauthlib import OAuth2
+
+logger = logging.getLogger('hhs_server.%s' % __name__)
 
 
 @login_required
@@ -28,12 +32,17 @@ def bbof_get_eob(request):
             settings,
             'OAUTH2IO_HOST',
             "https://dev.bluebutton.cms.fhirservice.net"),
-        '/protected/bluebutton/fhir/v1/ExplanationOfBenefit/?patient=%s' % (request.user.username))
+        '/protected/bluebutton/fhir/v1/ExplanationOfBenefit/')
+    # ?patient=%s % (request.user.username)
     print("EOB URL", url)
     response = requests.get(url, auth=auth)
 
     if response.status_code in (200, 404):
-        content = response.json()
+        if response.json():
+            content = json.dumps(response.json(), indent=4)
+        else:
+            content = {'error': 'problem reading content.'}
+
     elif response.status_code == 403:
         content = {'error': 'No read capability'}
         content = response.content
@@ -61,11 +70,16 @@ def bbof_get_coverage(request):
             settings,
             'OAUTH2IO_HOST',
             "https://dev.bluebutton.cms.fhirservice.net"),
-        '/protected/bluebutton/fhir/v1/Coverage/?patient=%s?_format=json' % request.user.username)
+        '/protected/bluebutton/fhir/v1/Coverage/?_format=json')
+    # patient = % s? request.user.username
     response = requests.get(url, auth=auth)
 
     if response.status_code in (200, 404):
-        content = response.json()
+        if response.json():
+            content = json.dumps(response.json(), indent=4)
+        else:
+            content = {'error': 'problem reading content.'}
+
     elif response.status_code == 403:
         content = {'error': 'No read capability'}
         content = response.content
@@ -92,12 +106,20 @@ def bbof_get_patient(request):
             settings,
             'OAUTH2IO_HOST',
             "https://dev.bluebutton.cms.fhirservice.net"),
-        '/protected/bluebutton/fhir/v1/Patient/%s?_format=json' %
-        (request.user.username))
+        '/protected/bluebutton/fhir/v1/Patient/'
+        '?_format=json')
+
+    # % (request.user.username)
+
+    logging.debug("calling FHIR Service with %s" % url)
+
     response = requests.get(url, auth=auth)
 
     if response.status_code in (200, 404):
-        content = response.json()
+        if response.json():
+            content = json.dumps(response.json(), indent=4)
+        else:
+            content = {'error': 'problem reading content.'}
     elif response.status_code == 403:
         content = {'error': 'No read capability'}
         content = response.content
@@ -122,7 +144,11 @@ def djmongo_read(request):
         '/djm/search/api/oauth2/nppes/pjson/pjson2.json')
     response = requests.get(url, auth=auth)
     if response.status_code in (200, 404):
-        content = response.json()
+        if response.json():
+            content = json.dumps(response.json(), indent=4)
+        else:
+            content = {'error': 'problem reading content.'}
+
     elif response.status_code == 403:
         content = {'error': 'No read capability'}
     else:
@@ -137,7 +163,7 @@ def djmongo_read(request):
 def djmongo_write(request):
     context = {'name': 'Djmongo OAuth2 Write Test'}
     # first we get the token used to login
-    token = request.user.social_auth.get(provider='oauth2io').access_token  
+    token = request.user.social_auth.get(provider='oauth2io').access_token
     auth = OAuth2(settings.SOCIAL_AUTH_OAUTH2IO_KEY,
                   token={'access_token': token, 'token_type': 'Bearer'})
     # next we call the remote api

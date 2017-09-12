@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from social_core.backends.oauth import BaseOAuth2
-
-from django.core.exceptions import ImproperlyConfigured
-from django.core.urlresolvers import reverse
 from django.conf import settings
+
+__author__ = "Alan Viars"
 
 
 class OAuth2ioOAuth2(BaseOAuth2):
@@ -12,7 +11,7 @@ class OAuth2ioOAuth2(BaseOAuth2):
         settings,
         'OAUTH2IO_HOST',
         "https://dev.bluebutton.cms.fhirservice.net")
-    #OAUTH2IO_HOST = getattr(settings, 'OAUTH2IO_HOST', "http://oauth2:8000")
+    # OAUTH2IO_HOST = getattr(settings, 'OAUTH2IO_HOST', "http://oauth2:8000")
     ID_KEY = 'email'
     AUTHORIZATION_URL = OAUTH2IO_HOST + '/o/authorize/'
     ACCESS_TOKEN_URL = OAUTH2IO_HOST + '/o/token/'
@@ -26,8 +25,6 @@ class OAuth2ioOAuth2(BaseOAuth2):
             settings,
             'OAUTH2IO_HOST',
             "https://dev.bluebutton.cms.fhirservice.net") + '/connect/userinfo'
-        #user_profile_url = getattr(settings, 'OAUTH2IO_HOST', "http://oauth2:8000") \
-        #                            + '/connect/userinfo'
         return user_profile_url
 
     def get_user_id(self, details, response):
@@ -36,7 +33,7 @@ class OAuth2ioOAuth2(BaseOAuth2):
 
     def get_user_details(self, response):
         """
-        Return user details from OAUTH2IO account
+        Return user details from OAUTH2.IO account
         """
         return {
             'username': response.get('sub'),
