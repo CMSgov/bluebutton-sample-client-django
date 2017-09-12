@@ -109,7 +109,7 @@ def bbof_get_patient(request):
         '/protected/bluebutton/fhir/v1/Patient/'
         '?_format=json')
 
-        # % (request.user.username)
+    # % (request.user.username)
 
     logging.debug("calling FHIR Service with %s" % url)
 
@@ -163,7 +163,7 @@ def djmongo_read(request):
 def djmongo_write(request):
     context = {'name': 'Djmongo OAuth2 Write Test'}
     # first we get the token used to login
-    token = request.user.social_auth.get(provider='oauth2io').access_token  
+    token = request.user.social_auth.get(provider='oauth2io').access_token
     auth = OAuth2(settings.SOCIAL_AUTH_OAUTH2IO_KEY,
                   token={'access_token': token, 'token_type': 'Bearer'})
     # next we call the remote api
