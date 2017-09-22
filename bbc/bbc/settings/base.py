@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-from getenv import env
+
 from django.contrib.messages import constants as messages
 
 from .utils import bool_env 
@@ -29,7 +29,7 @@ __author__ = "Alan Viars"
 SECRET_KEY = 'piehme*+^#hylq8uz2eszps%o!5!+*#1@+*83gmp$o(u3%!ldp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool_env(env('DJANGO_DEBUG', False))
+DEBUG = bool_env(os.environ.get('DJANGO_DEBUG', False))
 
 ALLOWED_HOSTS = ['*', ]
 
