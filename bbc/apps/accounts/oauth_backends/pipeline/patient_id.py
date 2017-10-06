@@ -12,5 +12,5 @@ __author__ = "Alan Viars"
 def save_profile(backend, user, response, *args, **kwargs):
     if backend.name == 'oauth2io':
         profile, g_o_c = UserProfile.objects.get_or_create(user=user)
-        profile.patient_fhir_id = response.get('patient')
+        profile.patient_fhir_id = response.get('patient', "")
         profile.save()
