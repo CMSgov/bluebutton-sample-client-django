@@ -8,7 +8,14 @@ from django.test.utils import get_runner
 
 
 if __name__ == '__main__':
-    os.environ['DJANGO_SETTINGS_MODULE'] = 'hhs_oauth_server.settings.test'
+    #sys.path.append(os.path.realpath(__file__))
+    retval = os.getcwd()
+    path = retval + "/bbc"
+    print("PATH", path)
+    os.chdir(path)
+    print(path)
+    sys.path.append(path)
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'bbc.settings.local'
     django.setup()
     TestRunner = get_runner(settings)
     test_runner = TestRunner()

@@ -38,7 +38,7 @@ Please refer to the <a href="https://hhsidealab.github.io/bluebutton-developer-h
 	    <div class="row">
         <div class="col-lg-12">
 			<h1>Explanation of Benefit</h1>
-<a href="{%url 'bbof_get_eob' %}"><button type="button" class="btn btn-primary">{{settings.OAUTH2IO_HOST}}/protected/bluebutton/fhir/v1/ExplanationOfBenefit/?patient={{request.user.username}}&_format=json</button> </a>
+<a href="{%url 'bbof_get_eob' %}"><button type="button" class="btn btn-primary">{{settings.OAUTH2IO_HOST}}/protected/bluebutton/fhir/v1/ExplanationOfBenefit/?patient={{profile.patient_fhir_id}}&_format=json</button> </a>
 		   
         </div>
       </div>
@@ -46,7 +46,7 @@ Please refer to the <a href="https://hhsidealab.github.io/bluebutton-developer-h
 			    <div class="row">
         <div class="col-lg-12">
 			<h1>Patient</h1>
-<a href="{%url 'bbof_get_patient' %}"><button type="button" class="btn btn-primary">{{settings.OAUTH2IO_HOST}}/protected/bluebutton/fhir/v1/Patient/{{request.user.username}}?_format=json</button> </a>
+<a href="{%url 'bbof_get_patient' %}"><button type="button" class="btn btn-primary">{{settings.OAUTH2IO_HOST}}/protected/bluebutton/fhir/v1/Patient/{{profile.patient_fhir_id}}?_format=json</button> </a>
 		  
 
         </div>
@@ -54,7 +54,7 @@ Please refer to the <a href="https://hhsidealab.github.io/bluebutton-developer-h
 	    <div class="row">
         <div class="col-lg-12">
 			<h1>Coverage</h1>
-<a href="{%url 'bbof_get_coverage' %}"><button type="button" class="btn btn-primary">{{settings.OAUTH2IO_HOST}}/bluebutton/fhir/v1/Coverage/?patient={{request.user.username}}&_format=json</button> </a>
+<a href="{%url 'bbof_get_coverage' %}"><button type="button" class="btn btn-primary">{{settings.OAUTH2IO_HOST}}/bluebutton/fhir/v1/Coverage/?patient={{profile.patient_fhir_id}}&_format=json</button> </a>
 
         </div>
       </div>

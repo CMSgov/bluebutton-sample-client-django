@@ -11,10 +11,10 @@ from django.utils.encoding import python_2_unicode_compatible
 @python_2_unicode_compatible
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
-    patient_fhir_id  = models.CharField(max_length=255,
-                                         blank=True,
-                                         default='')
-    
+    patient_fhir_id = models.CharField(max_length=255,
+                                       blank=True,
+                                       default='')
+
     def __str__(self):
         name = '%s %s (%s)' % (self.user.first_name,
                                self.user.last_name,
