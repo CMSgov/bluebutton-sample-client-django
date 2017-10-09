@@ -56,7 +56,7 @@ class TestMyOAuthBackend(BaseApiTest):
         # the server should define an user with the following profile info
         from social.strategies.django_strategy import DjangoStrategy
         from social.storage.django_orm import BaseDjangoStorage
-        user_data = MyOAuthOAuth2(DjangoStrategy(BaseDjangoStorage)).user_data(access_token)
+        user_data = OAuth2ioOAuth2(DjangoStrategy(BaseDjangoStorage)).user_data(access_token)
         self.assertDictContainsSubset({
             'username': 'test_user',
             'first_name': 'Test',

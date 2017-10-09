@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from .accounts.oauth_backends.oauth2_io import OAuth2ioOAuth2
 
+
 class BaseApiTest(TestCase):
     """
     This class contains some helper methods useful to test API endpoints
@@ -22,7 +23,8 @@ class BaseApiTest(TestCase):
         Helper method that creates a user instance
         with `username` and `password` set.
         """
-        user = User.objects.create_user(username, password=password, **extra_fields)
+        user = User.objects.create_user(
+            username, password=password, **extra_fields)
         return user
 
     def _get_test_access_token(self, client_id):
@@ -34,10 +36,11 @@ class BaseApiTest(TestCase):
         # get credentials for the test server
         username = getattr(settings, 'TEST_INTEGRATION_USERNAME', None)
         password = getattr(settings, 'TEST_INTEGRATION_PASSWORD', None)
-        
+
         print("clientid", client_id)
         # get the access token with password flow
-        oauth = OAuth2Session(client=LegacyApplicationClient(client_id=client_id))
+        oauth = OAuth2Session(
+            client=LegacyApplicationClient(client_id=client_id))
         token = oauth.fetch_token(
             token_url=self.token_url,
             username=username, password=password, client_id=client_id)
