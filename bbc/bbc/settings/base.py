@@ -14,7 +14,7 @@ import os
 
 from django.contrib.messages import constants as messages
 
-from .utils import bool_env 
+from .utils import bool_env
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.join(BASE_DIR, '..')
@@ -183,6 +183,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.get_username',
     'social_core.pipeline.mail.mail_validation',
     'social_core.pipeline.user.create_user',
+    'apps.accounts.oauth_backends.pipeline.patient_id.save_profile',
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.debug.debug',
     'social_core.pipeline.social_auth.load_extra_data',
