@@ -40,6 +40,7 @@ class OAuth2ioOAuth2(BaseOAuth2):
             'first_name': response.get('given_name'),
             'last_name': response.get('family_name'),
             'email': response.get('email'),
+            'patient': response.get('patient'),
         }
 
     def user_data(self, access_token, *args, **kwargs):
