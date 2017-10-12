@@ -197,3 +197,7 @@ SETTINGS_EXPORT = [
     'OAUTH2IO_HOST',
     'APP_TITLE'
 ]
+
+# Set the default Encoding standard. typically 'utf-8'
+ENCODING = 'utf-8'
+
