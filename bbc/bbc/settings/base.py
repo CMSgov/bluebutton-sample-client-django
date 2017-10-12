@@ -200,4 +200,3 @@ SETTINGS_EXPORT = [
 
 # Set the default Encoding standard. typically 'utf-8'
 ENCODING = 'utf-8'
-
