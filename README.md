@@ -68,7 +68,7 @@ And from here, you can navigate to http://localhost:8000 and test your applicati
 
 ## Other Settings
 
-  *  `OAUTH2IO_HOST`   - the default is `https://dev.bluebutton.cms.fhirservice.net`
+  *  `OAUTH2IO_HOST`   - the default is `https://sandbox.bluebutton.cms.gov `
   *  `EXTERNAL_AUTH_NAME` - the default is `CMS`.
 
 If you change the `OAUTH2IO_HOST` to something non https (for testing), then you need to
