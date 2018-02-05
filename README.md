@@ -79,7 +79,7 @@ tell the oauthlib to operate in an insecure mode like so.
 
 ## Running the Tests
 
-To run the tests against https://dev.bluebutton.cms.fhirservice.net use:
+To run the tests against https://sandbox.bluebutton.cms.gov use:
 
     python manage.py test --settings=bbc.settings.test
 

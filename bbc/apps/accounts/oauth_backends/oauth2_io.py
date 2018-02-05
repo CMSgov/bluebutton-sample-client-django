@@ -10,11 +10,11 @@ class OAuth2ioOAuth2(BaseOAuth2):
     OAUTH2IO_HOST = getattr(
         settings,
         'OAUTH2IO_HOST',
-        "https://dev.bluebutton.cms.fhirservice.net")
+        "https://sandbox.bluebutton.cms.gov")
     # OAUTH2IO_HOST = getattr(settings, 'OAUTH2IO_HOST', "http://oauth2:8000")
     ID_KEY = 'email'
-    AUTHORIZATION_URL = OAUTH2IO_HOST + '/o/authorize/'
-    ACCESS_TOKEN_URL = OAUTH2IO_HOST + '/o/token/'
+    AUTHORIZATION_URL = OAUTH2IO_HOST + '/v1/o/authorize'
+    ACCESS_TOKEN_URL = OAUTH2IO_HOST + '/v1/o/token'
     ACCESS_TOKEN_METHOD = 'POST'
 
     def get_user_profile_url(self):
@@ -24,7 +24,7 @@ class OAuth2ioOAuth2(BaseOAuth2):
         user_profile_url = getattr(
             settings,
             'OAUTH2IO_HOST',
-            "https://dev.bluebutton.cms.fhirservice.net") + '/connect/userinfo'
+            "https://sandbox.bluebutton.cms.gov") + '/v1/connect/userinfo'
         return user_profile_url
 
     def get_user_id(self, details, response):
