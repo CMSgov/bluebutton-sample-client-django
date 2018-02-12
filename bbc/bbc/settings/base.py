@@ -165,6 +165,12 @@ SOCIAL_AUTH_OAUTH2IO_KEY = ''
 SOCIAL_AUTH_OAUTH2IO_SECRET = ''
 SOCIAL_AUTH_OAUTH2IO_SCOPE = []
 OAUTH2IO_HOST = "https://sandbox.bluebutton.cms.gov"
+
+FHIR_BASE_ENDPOINT = "%s/v1/fhir/" % (OAUTH2IO_HOST)
+USER_INFO_ENDPOINT = "%s/v1/connect/userinfo/" % (OAUTH2IO_HOST)
+FHIR_METADATA_URI =  "%smetadata" % (FHIR_BASE_ENDPOINT)
+OIDC_DISCOVERY_URI = "%s/.well-known/openid-configuration" % (OAUTH2IO_HOST)
+
 OAUTH2_PROVIDER_NAME = "CMS"
 APP_TITLE = "Blue Button Client Example"
 SOCIAL_AUTH_ALWAYS_ASSOCIATE = True
@@ -195,7 +201,10 @@ SOCIAL_AUTH_PIPELINE = (
 SETTINGS_EXPORT = [
     'OAUTH2_PROVIDER_NAME',
     'OAUTH2IO_HOST',
-    'APP_TITLE'
+    'APP_TITLE',
+    'USER_INFO_ENDPOINT',
+    'OIDC_DISCOVERY_URI',
+    'FHIR_METADATA_URI',
 ]
 
 # Set the default Encoding standard. typically 'utf-8'
