@@ -168,7 +168,7 @@ OAUTH2IO_HOST = "https://sandbox.bluebutton.cms.gov"
 
 FHIR_BASE_ENDPOINT = "%s/v1/fhir/" % (OAUTH2IO_HOST)
 USER_INFO_ENDPOINT = "%s/v1/connect/userinfo/" % (OAUTH2IO_HOST)
-FHIR_METADATA_URI =  "%smetadata" % (FHIR_BASE_ENDPOINT)
+FHIR_METADATA_URI = "%smetadata" % (FHIR_BASE_ENDPOINT)
 OIDC_DISCOVERY_URI = "%s/.well-known/openid-configuration" % (OAUTH2IO_HOST)
 
 OAUTH2_PROVIDER_NAME = "CMS"
