@@ -3,7 +3,7 @@ django-bootstrap-form
 django-localflavor
 python-social-auth
 requests
-requests_oauthlib<0.6
+requests_oauthlib<0.7
 pdt
 django-settings-export
 social-auth-app-django
