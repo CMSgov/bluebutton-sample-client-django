@@ -4,10 +4,15 @@ import json
 
 import logging
 
+
 try:
-    from urllib.parse import urljoin
+    from urllib.parse import (urljoin,
+                              urlparse,
+                              urlsplit,
+                              parse_qsl,
+                              urlencode)
 except ImportError:
-    from urlparse import urljoin
+    from urlparse import urljoin, urlparse, urlsplit, parse_qsl, urlencode
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -109,6 +114,9 @@ def bbof_get_patient(request, patient_id=None):
 @login_required
 def bbof_get_eob(request, patient_id=None):
     context = {'name': 'Blue Button on FHIR'}
+
+    # print("url called: %s" % request.get_full_path())
+
     # first we get the token used to login
     token = request.user.social_auth.get(provider='oauth2io').access_token
     auth = OAuth2(
@@ -118,11 +126,24 @@ def bbof_get_eob(request, patient_id=None):
             'token_type': 'Bearer'
         })
     urls = build_fhir_urls(patient_id)
-    response = requests.get(urls['eob'], auth=auth)
+
+    this_url = urls['eob']
+    qp = query_params(request.get_full_path())
+    pp = paging_params(qp)
+
+    url_qp = query_params(this_url)
+    if url_qp:
+        this_url += "&%s" % dict_to_urlencode(pp)
+    else:
+        this_url += "?%s" % dict_to_urlencode(pp)
+
+    response = requests.get(this_url, auth=auth)
 
     if response.status_code in (200, 404):
         if response.json():
             content = json.dumps(response.json(), indent=4)
+            context = get_links(request, context, response.json())
+
         else:
             content = {'error': 'problem reading content.'}
 
@@ -137,6 +158,7 @@ def bbof_get_eob(request, patient_id=None):
 
     context['remote_status_code'] = response.status_code
     context['remote_content'] = content
+
     return render(request, 'bbof.html', context)
 
 
@@ -152,11 +174,22 @@ def bbof_get_coverage(request, patient_id=None):
             'token_type': 'Bearer'
         })
     urls = build_fhir_urls(patient_id)
-    response = requests.get(urls['coverage'], auth=auth)
+    this_url = urls['coverage']
+    qp = query_params(request.get_full_path())
+    pp = paging_params(qp)
+
+    url_qp = query_params(this_url)
+    if url_qp:
+        this_url += "&%s" % dict_to_urlencode(pp)
+    else:
+        this_url += "?%s" % dict_to_urlencode(pp)
+
+    response = requests.get(this_url, auth=auth)
 
     if response.status_code in (200, 404):
         if response.json():
             content = json.dumps(response.json(), indent=4)
+            context = get_links(request, context, response.json())
         else:
             content = {'error': 'problem reading content.'}
 
@@ -173,6 +206,7 @@ def bbof_get_coverage(request, patient_id=None):
 @login_required
 def bbof_get_fhir(request, resource_type, patient):
     context = {'name': 'Blue Button on FHIR'}
+
     # first we get the token used to login
     token = request.user.social_auth.get(provider='oauth2io').access_token
     auth = OAuth2(
@@ -188,7 +222,6 @@ def bbof_get_fhir(request, resource_type, patient):
     url = urljoin(
         getattr(settings, 'OAUTH2IO_HOST',
                 "https://sandbox.bluebutton.cms.gov"), endpoint)
-    print(url)
     # % (request.user.username)
 
     logging.debug("calling FHIR Service with %s" % url)
@@ -216,3 +249,112 @@ def bbof_get_fhir(request, resource_type, patient):
     context['remote_content'] = content
     context['patient'] = patient
     return render(request, 'bbof.html', context)
+
+
+# @login_required
+# def fhir_paging(request, direction="next", url=None):
+#     # handle paging
+
+
+def get_links(request, context, response_json):
+    """
+    handle the json bundle
+    :param context:
+    :param response_json:
+    :return:
+    """
+
+    context['same_page'] = False
+    context['next_page'] = False
+    context['prev_page'] = False
+    context['last_page'] = False
+
+    context['same_page_url'] = ""
+    context['next_page_url'] = ""
+    context['prev_page_url'] = ""
+    context['last_page_url'] = ""
+
+    path = request.get_full_path()
+    query = request.GET.copy()
+
+    if 'link' in response_json:
+        for link_item in response_json['link']:
+            qd = query_params(link_item['url'])
+            pd = paging_params(qd)
+            u_p = dict_to_urlencode(pd)
+
+            if link_item['relation'] == "self":
+                context['same_page'] = True
+                context['same_page_url'] = "%s?%s" % (path, dict_to_urlencode(qd))
+            elif link_item['relation'] == "next":
+                context['next_page'] = True
+                context['next_page_url'] = "%s?%s" % (path, dict_to_urlencode(qd))
+            elif link_item['relation'] == "previous":
+                context['prev_page'] = True
+                context['prev_page_url'] = "%s?%s" % (path, dict_to_urlencode(qd))
+            elif link_item['relation'] == "last":
+                context['last_page'] = True
+                context['last_page_url'] = "%s?%s" % (path, dict_to_urlencode(qd))
+
+    return context
+
+
+def query_params(url=""):
+    """
+    Get url parameters from url
+    :param url:
+    :return:
+    """
+
+    u = urlparse(url)
+
+    qd = dict(parse_qsl(u.query))
+
+    return qd
+
+
+def paging_params(qd={}):
+    """
+    get the paging parameters from the query parameter dict
+    :param qd: [dict]
+    :return:
+    """
+
+    paging_dict = {}
+    if 'startIndex' in qd:
+        paging_dict['startIndex'] = qd['startIndex']
+    if 'count' in qd:
+        paging_dict['count'] = qd['count']
+
+    return paging_dict
+
+
+def dict_to_urlencode(d={}):
+    """
+    convert dict to urlencode string
+    :param d:
+    :return: du
+    """
+
+    if d:
+        du = urlencode(d)
+        return du
+    else:
+        return
+
+
+def merge_query(query={}, paging={}):
+    """
+    merge the query parameters passed in with the paging parameters
+    :param query:
+    :param paging:
+    :return: new_query
+    """
+
+    new_query = query
+
+    if paging:
+        for item, value in paging.items():
+            new_query[item] = value
+
+    return new_query
