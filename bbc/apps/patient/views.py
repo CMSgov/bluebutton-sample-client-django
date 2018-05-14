@@ -276,26 +276,28 @@ def get_links(request, context, response_json):
     context['last_page_url'] = ""
 
     path = request.get_full_path()
-    query = request.GET.copy()
 
     if 'link' in response_json:
         for link_item in response_json['link']:
             qd = query_params(link_item['url'])
-            pd = paging_params(qd)
-            u_p = dict_to_urlencode(pd)
+            pd = merge_query(qd, paging_params(qd))
 
             if link_item['relation'] == "self":
                 context['same_page'] = True
-                context['same_page_url'] = "%s?%s" % (path, dict_to_urlencode(qd))
+                context['same_page_url'] = "%s?%s" % (path,
+                                                      dict_to_urlencode(pd))
             elif link_item['relation'] == "next":
                 context['next_page'] = True
-                context['next_page_url'] = "%s?%s" % (path, dict_to_urlencode(qd))
+                context['next_page_url'] = "%s?%s" % (path,
+                                                      dict_to_urlencode(pd))
             elif link_item['relation'] == "previous":
                 context['prev_page'] = True
-                context['prev_page_url'] = "%s?%s" % (path, dict_to_urlencode(qd))
+                context['prev_page_url'] = "%s?%s" % (path,
+                                                      dict_to_urlencode(pd))
             elif link_item['relation'] == "last":
                 context['last_page'] = True
-                context['last_page_url'] = "%s?%s" % (path, dict_to_urlencode(qd))
+                context['last_page_url'] = "%s?%s" % (path,
+                                                      dict_to_urlencode(pd))
 
     return context
 

@@ -8,10 +8,40 @@
         <div class="col-lg-12">
 	      <ol class="breadcrumb">
 	        <li class="active"><a href="/">Blue Button on FHIR</a></li>
-	      </ol>
+
+
+    {% if same_page %}
+
+        <li>
+            <a href="{{ same_page_url }}"><i class="fa fa-refresh" aria-hidden="true"></i> Reload This Page</a>
+        </li>
+
+    {% endif %}
+    {% if prev_page %}
+
+        <li>
+            <a href="{{ prev_page_url }}"><i class="fa fa-step-backward" aria-hidden="true"></i> Previous Page</a>
+        </li>
+
+    {% endif %}
+    {% if next_page %}
+
+        <li>
+            <a href="{{ next_page_url }}">Next Page <i class="fa fa-step-forward" aria-hidden="true"></i></a>
+        </li>
+
+
+    {% endif %}
+    {% if last_page %}
+
+        <li>
+            <a href="{{ last_page_url }}">Last Page <i class="fa fa-fast-forward" aria-hidden="true"></i></a>
+        </li>
+
+    {% endif %}
+            </ol>
         </div>
      </div>
-
 
     <div class="row">
       <div class="col-lg-10">
