@@ -12,8 +12,8 @@ try:
                               parse_qsl,
                               urlencode)
 except ImportError:
-    from urllib import urljoin, urlencode
-    from urlparse import urlparse, urlsplit, parse_qsl
+    from urllib import urlencode
+    from urlparse import urljoin, urlparse, urlsplit, parse_qsl
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
