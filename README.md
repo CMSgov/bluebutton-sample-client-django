@@ -62,7 +62,9 @@ the values for:
 
 Finally, you're ready to execute
 
-    python manage.py runserver --settings bbc.settings.local
+    python manage.py runserver --settings bbc.settings.local  --insecure
+
+The --insecure option ensures that static files are loaded when running locally.
 
 And from here, you can navigate to http://localhost:8000 and test your application.
 
