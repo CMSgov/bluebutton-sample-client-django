@@ -99,6 +99,8 @@ def bbof_get_patient(request, patient_id=None):
     if response.status_code in (200, 404):
         if response.json():
             content = json.dumps(response.json(), indent=4)
+            context = get_resourceType(context, response.json())
+
         else:
             content = {'error': 'problem reading content.'}
     elif response.status_code == 403:
@@ -110,7 +112,7 @@ def bbof_get_patient(request, patient_id=None):
     context['remote_status_code'] = response.status_code
     context['remote_content'] = content
     context['url'] = url
-    context['pqtient'] = patient_id
+    context['patient'] = patient_id
     return render(request, 'bbof.html', context)
 
 
@@ -147,6 +149,7 @@ def bbof_get_eob(request, patient_id=None):
         if response.json():
             content = json.dumps(response.json(), indent=4)
             context = get_links(request, context, response.json())
+            context = get_resourceType(context, response.json())
 
         else:
             content = {'error': 'problem reading content.'}
@@ -195,6 +198,7 @@ def bbof_get_coverage(request, patient_id=None):
         if response.json():
             content = json.dumps(response.json(), indent=4)
             context = get_links(request, context, response.json())
+            context = get_resourceType(context, response.json())
         else:
             content = {'error': 'problem reading content.'}
 
@@ -260,6 +264,27 @@ def bbof_get_fhir(request, resource_type, patient):
 # @login_required
 # def fhir_paging(request, direction="next", url=None):
 #     # handle paging
+
+
+def get_resourceType(context, response_json):
+    """
+    get the resourceType to add to Context
+
+    """
+    if 'resourceType' in response_json:
+        rt = response_json['resourceType']
+    else:
+        rt = ""
+
+    context['resourceType'] = rt
+
+    if rt.lower() == "bundle":
+        if 'entry' in response_json:
+            if 'resource' in response_json['entry'][0]:
+                if 'resourceType' in response_json['entry'][0]['resource']:
+                    context['resourceType'] += ":" + response_json['entry'][0]['resource']['resourceType']
+
+    return context
 
 
 def get_links(request, context, response_json):
