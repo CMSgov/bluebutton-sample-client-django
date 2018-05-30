@@ -60,6 +60,7 @@ def bbof_get_userinfo(request):
     if response.status_code in (200, 404):
         if response.json():
             content = json.dumps(response.json(), indent=4)
+            context['patient_id'] = response.json()['patient']
         else:
             content = {'error': 'problem reading content.'}
     elif response.status_code == 403:
@@ -77,6 +78,7 @@ def bbof_get_userinfo(request):
 @login_required
 def bbof_get_patient(request, patient_id=None):
     context = {'name': 'Blue Button on FHIR'}
+    context['patient_id'] = patient_id
     urls = build_fhir_urls(patient_id)
 
     # first we get the token used to login
@@ -115,6 +117,7 @@ def bbof_get_patient(request, patient_id=None):
 @login_required
 def bbof_get_eob(request, patient_id=None):
     context = {'name': 'Blue Button on FHIR'}
+    context['patient_id'] = patient_id
 
     # print("url called: %s" % request.get_full_path())
 
@@ -166,6 +169,7 @@ def bbof_get_eob(request, patient_id=None):
 @login_required
 def bbof_get_coverage(request, patient_id=None):
     context = {'name': 'Blue Button on FHIR'}
+    context['patient_id'] = patient_id
     # first we get the token used to login
     token = request.user.social_auth.get(provider='oauth2io').access_token
     auth = OAuth2(
@@ -207,6 +211,7 @@ def bbof_get_coverage(request, patient_id=None):
 @login_required
 def bbof_get_fhir(request, resource_type, patient):
     context = {'name': 'Blue Button on FHIR'}
+    context['patient_id'] = patient
 
     # first we get the token used to login
     token = request.user.social_auth.get(provider='oauth2io').access_token

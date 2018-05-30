@@ -35,10 +35,10 @@ front of the following `pip` command.
 ### Configuring Your Development Application
 
 By default, your application will be set up to use the public OAuth service
-at https://dev.bluebutton.cms.fhirservice.net/. In order to use this version of
-the service, you'll need to request an account on that site. So select Account ->
-"Request an Invite," fill out the form, setting user type to "Developer," and
-we'll get back to you as soon as possible.
+at https://sandbox.bluebutton.cms.gov/. In order to use this version of
+the service, you'll need to request an account on that site. So go to
+https://sandbox.bluebutton.cms.gov and choose "+Signup" in the top navigation bar.
+Fill out the form, setting user type to "Developer".
 
 Once you have your developer account created and you've verified your email address,
 you'll need to set up an application. Log in to your new account, and select
@@ -57,6 +57,9 @@ the values for:
 
   * `SOCIAL_AUTH_OAUTH2IO_KEY`
   * `SOCIAL_AUTH_OAUTH2IO_SECRET`
+
+Client ID is entered in the "SOCIAL_AUTH_OAUTH2IO_KEY" variable.
+Client Secret is entered in the "SOCIAL_AUTH_OAUTH2IO_SECRET" variable.
 
 ### Final Steps
 
