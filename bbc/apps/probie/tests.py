@@ -19,7 +19,7 @@ from django.test.client import Client
 
 from django.conf import settings
 
-from .views import (get_fhir_dict,
+from .utils import (get_fhir_dict,
                     show_html_name,
                     show_txtval,
                     show_array)
