@@ -7,7 +7,7 @@
   <div class="card">
     <div class="card-header col-sm-12" id="heading{{ card_item.pathSeq }}">
 
-        {% if card_item.type == 'str' or card_item.type == int %}
+        {% if card_item.type == 'str' or card_item.type == 'int' %}
 
             {% include "display_string.html" %}
 

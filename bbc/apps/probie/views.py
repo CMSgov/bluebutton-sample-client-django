@@ -12,12 +12,12 @@ Created: 6/10/18 5:45 PM
 
 Created by: '@ekivemark'
 """
+
 from __future__ import absolute_import
 from __future__ import unicode_literals
 import json
 
 import logging
-
 
 try:
     from urllib.parse import (urljoin,
@@ -37,60 +37,8 @@ from requests_oauthlib import OAuth2
 from .utils import get_fhir_dict, get_oauth_token
 from .forms import getUrlForm, getCustomViewForm
 from ..patient.views import build_fhir_urls
-
+from .settings_custom_view import CUSTOM_VIEW
 __author__ = "@ekivemark"
-
-CUSTOM_VIEW = [
-    {'view': 'Patient',
-     'display_title': '',
-     'pathName': 'resourceType'},
-    {'view': 'Patient',
-     'display_title': 'Patient Identifier',
-     'pathName': 'identifier.0.value'},
-    {'view': 'Patient',
-     'display_title': 'Patient Name',
-     'pathName': 'name.0.given.0'},
-    {'view': 'Patient',
-     'display_title': 'Patient Last Name',
-     'pathName': 'name.0.family'},
-    {'view': 'Patient',
-     'display_title': 'Date of Birth',
-     'pathName': 'birthDate'},
-    {'view': 'Patient',
-     'display_title': 'Patient Zip Code',
-     'pathName': 'address.0.postalCode'},
-    {'view': "Patient",
-     "display_title": "State",
-     "pathName": "address.0.state"},
-    {'view': 'Coverage',
-     'display_title': '',
-     'pathName': 'entry.0.resource.resourceType'},
-    {'view': 'Coverage',
-     'display_title': '',
-     'pathName': 'entry.0.resource.status'},
-    {'view': 'Coverage',
-     'display_title': 'Medicare Plan',
-     'pathName': 'entry.0.resource.type.coding.0.code'},
-    {'view': 'Coverage',
-     'display_title': '',
-     'pathName': 'entry.1.resource.status'},
-    {'view': 'Coverage',
-     'display_title': 'Medicare Plan',
-     'pathName': 'entry.1.resource.type.coding.0.code'},
-    {'view': 'Coverage',
-     'display_title': '',
-     'pathName': 'entry.2.resource.status'},
-    {'view': 'Coverage',
-     'display_title': 'Medicare Plan',
-     'pathName': 'entry.2.resource.type.coding.0.code'},
-    {'view': 'Coverage',
-     'display_title': 'Last updated',
-     'pathName': 'meta.lastUpdated'},
-    {'view': 'Coverage',
-     'display_title': 'Insurance Plans',
-     'pathName': 'entry'},
-
-]
 
 
 @login_required

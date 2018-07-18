@@ -1,6 +1,6 @@
 {% load is_int %}
 {% load startswith %}
-
+<!-- template/display_string.html:start -->
             <p>{% if not card_item.name|is_int %}<span class="h6">{{ card_item.name }}</span>: {% endif %}
                 {% if card_item.value|startswith:settings.FHIR_BASE_ENDPOINT %}
                   <i class="fa fa-eye" aria-hidden="true"></i> <a href="/probie/geturlwithauth?url={{ card_item.value|urlencode:'' }}" target="_blank">{{ card_item.value }}</a></p>
@@ -9,3 +9,4 @@
                 {% else %}
                     {{ card_item.value}}</p>
                 {% endif %}
+<!-- template/display_string.html:end -->
