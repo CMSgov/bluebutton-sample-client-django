@@ -1,0 +1,11 @@
+<div id="collapse{{ card_item.pathSeq }}" class="collapse" aria-labelledby="heading{{ card_item.pathSeq }}" data-parent="#accordion">
+  <div class="card-body">
+      {% with drill_level=display_level %}
+        {% with drill_level=drill_level|add:1 %}
+
+            {% include "probie_card.html" with card_dict=card_item.subset display_level=drill_level parent_path=card_item.path_seq %}
+
+        {% endwith %}
+      {% endwith %}
+  </div>
+</div>

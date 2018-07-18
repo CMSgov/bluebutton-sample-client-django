@@ -35,13 +35,28 @@ Please refer to the <a href="https://hhsidealab.github.io/bluebutton-developer-h
         </div>
       </div>
 	
+    <div class="row">
+        <div class="col-lg-12">
+			<h1>FHIR Probe</h1>
+               <a href="/probie/getmetadata"><button type="button" class="btn btn-primary">
+                   FHIR Probie - Metadata</button> </a>
+
+               <a href="/probie/getbyurl"><button type="button" class="btn btn-primary">
+                   FHIR Probie - Get by URL</button> </a>
+
+               <a href="/probie/geturlwithauth?url={{ 'https://sandbox.bluebutton.cms.gov/v1/fhir/Patient/20000000002322'|urlencode:'' }}"><button type="button" class="btn btn-primary">
+                   FHIR Probie - Get with auth</button> </a>
+
+               <a href="/probie/customview?view=Patient&url={{ 'https://sandbox.bluebutton.cms.gov/v1/fhir/Patient/20000000002322'|urlencode:'' }}"><button type="button" class="btn btn-primary">
+                   FHIR Probie - Custom View:Patient</button> </a>
+
+            </div>
     
-    
-    
+    </div>
     <div class="row">
         <div class="col-lg-12">
 			<h1>UserInfo</h1>
-               <a href="{%url 'bbof_get_userinfo'  %}"><button type="button" class="btn btn-primary">{{settings.USER_INFO_ENDPOINT}}</button> </a>
+               <a href="{%url 'bbof_get_userinfo' %}"><button type="button" class="btn btn-primary">{{settings.USER_INFO_ENDPOINT}}</button> </a>
 		  
             </div>
       </div>
@@ -50,7 +65,7 @@ Please refer to the <a href="https://hhsidealab.github.io/bluebutton-developer-h
     	<div class="row">
         <div class="col-lg-12">
 			<h1>Patient</h1>
-               <a href="{%url 'bbof_get_patient' patient_id  %}"><button type="button" class="btn btn-primary">{{fhir_urls.patient}}</button> </a>
+               <a href="{%url 'bbof_get_patient' patient_id %}"><button type="button" class="btn btn-primary">{{fhir_urls.patient}}</button> </a>
 		  
             </div>
       </div>
@@ -59,7 +74,7 @@ Please refer to the <a href="https://hhsidealab.github.io/bluebutton-developer-h
 	    <div class="row">
         <div class="col-lg-12">
 			<h1>Explanation of Benefit</h1>
-               <a href="{%url 'bbof_get_eob' patient_id  %}"><button type="button" class="btn btn-primary">{{fhir_urls.eob}}</button> </a>
+               <a href="{%url 'bbof_get_eob' patient_id %}"><button type="button" class="btn btn-primary">{{fhir_urls.eob}}</button> </a>
         </div>
       </div>
     
@@ -69,7 +84,7 @@ Please refer to the <a href="https://hhsidealab.github.io/bluebutton-developer-h
 	    <div class="row">
         <div class="col-lg-12">
 			<h1>Coverage</h1>
-               <a href="{%url 'bbof_get_coverage' patient_id  %}"><button type="button" class="btn btn-primary">{{fhir_urls.coverage}}</button> </a>
+               <a href="{%url 'bbof_get_coverage' patient_id %}"><button type="button" class="btn btn-primary">{{fhir_urls.coverage}}</button> </a>
         </div>
       </div>
 

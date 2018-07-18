@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'apps.accounts',
     'apps.home',
     'apps.patient',
+    'apps.probie',
     'social_django',
 )
 
@@ -205,6 +206,7 @@ SETTINGS_EXPORT = [
     'USER_INFO_ENDPOINT',
     'OIDC_DISCOVERY_URI',
     'FHIR_METADATA_URI',
+    'FHIR_BASE_ENDPOINT'
 ]
 
 # Set the default Encoding standard. typically 'utf-8'

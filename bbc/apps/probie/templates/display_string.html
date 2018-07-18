@@ -1,0 +1,11 @@
+{% load is_int %}
+{% load startswith %}
+
+            <p>{% if not card_item.name|is_int %}<span class="h6">{{ card_item.name }}</span>: {% endif %}
+                {% if card_item.value|startswith:settings.FHIR_BASE_ENDPOINT %}
+                  <i class="fa fa-eye" aria-hidden="true"></i> <a href="/probie/geturlwithauth?url={{ card_item.value|urlencode:'' }}" target="_blank">{{ card_item.value }}</a></p>
+                {% elif card_item.value|startswith:'http' %}
+                   <a href="{{ card_item.value }}" target="_blank">{{ card_item.value }}&nbsp;<i class="fa fa-external-link" aria-hidden="true"></i></a></p>
+                {% else %}
+                    {{ card_item.value}}</p>
+                {% endif %}

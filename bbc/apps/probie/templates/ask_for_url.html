@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block extra_head %}
+{% endblock %}
+{% block Content %}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-12">
+	      <ol class="breadcrumb">
+	        <li class="active"><a href="/">Home</a></li>
+
+          </ol>
+        </div>
+     </div>
+
+    <div class="row">
+      <div class="col-lg-10">
+        {% include "include/messages.html" %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-10">
+
+        <form method="post" novalidate>
+          {% csrf_token %}
+          {{ form.as_table }}
+
+          <p>
+              <button type="submit">Submit</button>
+          </p>
+        </form>
+      </div>
+    </div>
+
+
+  <div class="col-sm-12 card-footer">
+    {{ What_is_a_Probie|safe }}
+  </div>
+
+</div><!-- /.container -->
+
+{% endblock %}
+
