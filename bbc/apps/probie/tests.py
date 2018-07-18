@@ -37,7 +37,7 @@ class testContent(TestCase):
         """
 
         target_file = os.path.join(settings.BASE_DIR,
-                                   'apps/fhirengine/capabilityStatement.json')
+                                   'apps/probie/capabilityStatement.json')
         with open(target_file) as f:
             data = json.load(f)
 
