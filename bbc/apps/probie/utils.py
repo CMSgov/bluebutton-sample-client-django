@@ -331,7 +331,7 @@ def show_array(display={}):
     if display is None:
         return None
 
-    print("Display:%s" % display)
+    # print("Display:%s" % display)
 
     if type(display).__name__ == "list":
         for name in display:
@@ -340,8 +340,8 @@ def show_array(display={}):
         # print("anything dict")
         # print("display is:%s" % display)
 
-        for i, v in display:
-            print("item is:%s = %s" % (i, v))
+        for i, v in display.items():
+            # print("item is:%s = %s" % (i, v))
             html_out += "%s[%s]:%s" % (i,
                                        type(v).__name__,
                                        v)

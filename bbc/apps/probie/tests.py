@@ -206,6 +206,6 @@ class testShowArray(TestCase):
 
         expected = None
 
-        print(result)
+        # print(result)
 
         self.assertTrue(result, expected)
