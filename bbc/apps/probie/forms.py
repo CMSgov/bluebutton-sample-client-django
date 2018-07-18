@@ -24,3 +24,17 @@ class getUrlForm(forms.Form):
 
     url = forms.URLField()
 
+
+class getCustomViewForm(forms.Form):
+    """
+    get url to fetch
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['url'].widget.attrs.update(size='80')
+
+    url = forms.URLField()
+    custom_view = forms.CharField(max_length=120)
+
+

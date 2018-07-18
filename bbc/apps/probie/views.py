@@ -35,7 +35,7 @@ from django.shortcuts import render
 import requests
 from requests_oauthlib import OAuth2
 from .utils import get_fhir_dict, get_oauth_token
-from .forms import getUrlForm
+from .forms import getUrlForm, getCustomViewForm
 from ..patient.views import build_fhir_urls
 
 __author__ = "@ekivemark"
@@ -64,7 +64,31 @@ CUSTOM_VIEW = [
      "pathName": "address.0.state"},
     {'view': 'Coverage',
      'display_title': '',
-     'pathName': ''},
+     'pathName': 'entry.0.resource.resourceType'},
+    {'view': 'Coverage',
+     'display_title': '',
+     'pathName': 'entry.0.resource.status'},
+    {'view': 'Coverage',
+     'display_title': 'Medicare Plan',
+     'pathName': 'entry.0.resource.type.coding.0.code'},
+    {'view': 'Coverage',
+     'display_title': '',
+     'pathName': 'entry.1.resource.status'},
+    {'view': 'Coverage',
+     'display_title': 'Medicare Plan',
+     'pathName': 'entry.1.resource.type.coding.0.code'},
+    {'view': 'Coverage',
+     'display_title': '',
+     'pathName': 'entry.2.resource.status'},
+    {'view': 'Coverage',
+     'display_title': 'Medicare Plan',
+     'pathName': 'entry.2.resource.type.coding.0.code'},
+    {'view': 'Coverage',
+     'display_title': 'Last updated',
+     'pathName': 'meta.lastUpdated'},
+    {'view': 'Coverage',
+     'display_title': 'Insurance Plans',
+     'pathName': 'entry'},
 
 ]
 
@@ -156,6 +180,32 @@ def get_by_url(request):
                                           'cms.gov/v1/fhir/metadata'})
 
     return render(request, 'ask_for_url.html', {'form': form})
+
+
+@login_required
+def get_custom_view(request):
+    # if this is a POST request we need to process the form data
+    # print("in get_by_url")
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = getCustomViewForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            # print("URL:%s" % form.cleaned_data['url'])
+            return custom_view_url(request,
+                                   form.cleaned_data['url'],
+                                   form.cleaned_data['custom_view'])
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        # print("Doing get in get_by_url")
+        form = getCustomViewForm(initial={'url': 'https://sandbox.bluebutton.'
+                                                 'cms.gov/v1/fhir/metadata'})
+
+    return render(request, 'ask_for_custom_view.html', {'form': form})
 
 
 @login_required

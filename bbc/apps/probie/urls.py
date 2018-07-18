@@ -18,7 +18,8 @@ from django.conf.urls import url
 from .views import (get_json_metadata,
                     get_by_url,
                     get_url_with_auth,
-                    show_custom_view)
+                    show_custom_view,
+                    get_custom_view)
 
 urlpatterns = [
     url(r'^getmetadata$',
@@ -30,6 +31,9 @@ urlpatterns = [
     url(r'^geturlwithauth$',
         get_url_with_auth,
         name="probie_geturlwithauth"),
+    url(r'^getcustomview$',
+        get_custom_view,
+        name="probie_getcustomview"),
     url(r'^customview$',
         show_custom_view,
         name="probie_showcustomview"),
