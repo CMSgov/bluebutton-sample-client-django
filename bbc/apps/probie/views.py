@@ -110,7 +110,7 @@ def get_json_metadata(request):
     # print("Made it to endpoint")
 
     # first we get the OAuth token used to login
-    auth =  get_oauth_token(request)
+    auth = get_oauth_token(request)
 
     # next we call the remote api
     if resource_type.lower() == "metadata":
@@ -310,9 +310,6 @@ def custom_view_url(request, url, view=None):
     custom_view_list = [item for item in CUSTOM_VIEW if item['view'] == custom_view_name]
     # print("Custom Selection: %s" % custom_view_list)
     # print("\n")
-    custom_view_paths = [itm['pathName'] for itm in custom_view_list]
-    # print("Only Paths:%s" % custom_view_paths)
-    # print("\n")
 
     fe_d_subset = []
 
@@ -328,7 +325,6 @@ def custom_view_url(request, url, view=None):
             else:
                 # print("No match:%s with %s" % (fe_i['pathName'], c_v_p))
                 pass
-
 
         # for c_v_p in custom_view_paths:
         #     if fe_i['pathName'] == c_v_p:

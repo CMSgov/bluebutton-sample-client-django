@@ -14,7 +14,6 @@ Created by: '@ekivemark'
 from django.conf import settings
 from requests_oauthlib import OAuth2
 
-
 STR_PRE = "<b>"
 STR_POST = "</b>"
 
@@ -111,7 +110,6 @@ def get_fhir_dict(idict={}, parent_name="", parent_seq="0", flatten=False):
                                     next_pathname(parent_name, str(item)),
                                     next_pathseq(parent_seq, seq),
                                     flatten)
-
 
         elif type(val) is int:
             oo_list = []
@@ -219,27 +217,29 @@ class Formatter(object):
 
     def format_object(self, value, indent):
         return "'%s%s%s'" % (STR_PRE,
-                           value,
-                           STR_POST)
+                             value,
+                             STR_POST)
 
     def format_dict(self, value, indent):
         items = [
-            self.lfchar + self.htchar * (indent + 1) + repr(key) + ': ' +
-            (self.types[type(value[key]) if type(value[key]) in self.types else object])(self, value[key], indent + 1)
+            self.lfchar + self.htchar * (indent + 1) + repr(key) + ': ' + (self.types[type(value[key])
+                                                                           if type(value[key]) in self.types else object])(self, value[key], indent + 1)
             for key in value
         ]
         return '{%s}' % (','.join(items) + self.lfchar + self.htchar * indent)
 
     def format_list(self, value, indent):
         items = [
-            self.lfchar + self.htchar * (indent + 1) + (self.types[type(item) if type(item) in self.types else object])(self, item, indent + 1)
+            self.lfchar + self.htchar * (indent + 1) + (self.types[type(item)
+                                                        if type(item) in self.types else object])(self, item, indent + 1)
             for item in value
         ]
         return '[%s]' % (','.join(items) + self.lfchar + self.htchar * indent)
 
     def format_tuple(self, value, indent):
         items = [
-            self.lfchar + self.htchar * (indent + 1) + (self.types[type(item) if type(item) in self.types else object])(self, item, indent + 1)
+            self.lfchar + self.htchar * (indent + 1) + (self.types[type(item)
+                                                        if type(item) in self.types else object])(self, item, indent + 1)
             for item in value
         ]
         return '(%s)' % (','.join(items) + self.lfchar + self.htchar * indent)

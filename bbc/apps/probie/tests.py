@@ -36,8 +36,8 @@ class testContent(TestCase):
         :return:
         """
 
-        target_file =  os.path.join(settings.BASE_DIR,
-                                    'apps/fhirengine/capabilityStatement.json')
+        target_file = os.path.join(settings.BASE_DIR,
+                                   'apps/fhirengine/capabilityStatement.json')
         with open(target_file) as f:
             data = json.load(f)
 

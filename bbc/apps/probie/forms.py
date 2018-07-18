@@ -13,6 +13,7 @@ Created by: '@ekivemark'
 
 from django import forms
 
+
 class getUrlForm(forms.Form):
     """
     get url to fetch
@@ -36,5 +37,3 @@ class getCustomViewForm(forms.Form):
 
     url = forms.URLField()
     custom_view = forms.CharField(max_length=120)
-
-
