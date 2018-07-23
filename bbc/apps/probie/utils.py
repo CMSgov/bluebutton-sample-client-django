@@ -255,7 +255,7 @@ def is_number(var):
     try:
         int(var)
         return True
-    except:
+    except TypeError:
         return False
 
 
