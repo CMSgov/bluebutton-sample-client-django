@@ -11,11 +11,13 @@ Created: 6/13/18 11:59 PM
 Created by: '@ekivemark'
 """
 
+import json
+from objectpath import Tree
+
 from django.conf import settings
 from requests_oauthlib import OAuth2
 
-STR_PRE = "<b>"
-STR_POST = "</b>"
+from .settings import (JSON_INDENT, STR_PRE, STR_POST)
 
 
 def get_oauth_token(request):
@@ -50,7 +52,7 @@ def next_pathseq(parent_seq, seq):
 
     :return:
     """
-    if parent_seq in ['0', '0.']:
+    if parent_seq in ['0', '0.', '.']:
         pathseq = "%s" % (str(seq))
     else:
         pathseq = "%s.%s" % (parent_seq, str(seq))
@@ -251,11 +253,10 @@ def is_number(var):
     :param var:
     :return: True | False
     """
-
     try:
-        if var == int(var):
-            return True
-    except Exception:
+        int(var)
+        return True
+    except:
         return False
 
 
@@ -358,3 +359,235 @@ def show_array(display={}):
         return
     else:
         return html_out
+
+
+def process_response(response):
+    """
+    Get result from response and process the json or return error
+    :param response:
+    :return probie, content:
+    """
+
+    probie = {}
+    if response.status_code in (200, 404):
+        if response.json():
+
+            probie['hierarchy'] = get_fhir_dict(response.json(),
+                                                parent_name="",
+                                                parent_seq="0",
+                                                flatten=False)
+            probie['flat'] = get_fhir_dict(response.json(),
+                                                parent_name="",
+                                                parent_seq="0",
+                                                flatten=True)
+
+            content = {'text': response.text,
+                       'json': response.json(),
+                       'error': 'problem reading content.',
+                       'status_code': response.status_code}
+        else:
+            content = {'text': response.text,
+                       'json': '',
+                       'error': 'problem reading content.',
+                       'status_code': response.status_code}
+    elif response.status_code == 403:
+        content = {'text': response.text,
+                   'json': '',
+                   'error': 'No read capability',
+                   'status_code': response.status_code}
+    elif response.status_code == 401:
+        print("We got a 401")
+        content = {'text': response.text,
+                   'status_code': response.status_code}
+        if response.json():
+            print("We got json")
+            content['json'] = response.json()
+            if 'detail' in response.json():
+                content['error'] = '%s: %s' % (response.status_code,
+                                               response.json()['detail'])
+            else:
+                content['error'] = '%s Error from ' \
+                                   'the server' % response.status_code
+        else:
+            content['json'] = {}
+            content['error'] = '%s ' \
+                               'Error from the server' % response.status_code
+        print("Content%s" % content)
+    elif response.status_code <= 500:
+        content = {'text': response.text,
+                   'status_code': response.status_code}
+        if response.json():
+            content['json'] = response.json()
+            if 'detail' in response.json():
+                content['error'] = '%s: %s' % (response.status_code,
+                                               response.json()['detail'])
+            else:
+                content['error'] = '%s ' \
+                                   'Error from the server' % response.status_code
+        else:
+            content['json'] = {}
+            content['error'] = '%s ' \
+                               'Error from the server' % response.status_code
+    else:
+        content = {'text': response.text,
+                   'json': '',
+                   'error': '',
+                   'status_code': response.status_code}
+
+
+    print(response.status_code)
+    print(response.json())
+    print(response.text)
+    print("==================")
+    print("Content%s" % content)
+
+    print("===== leaving process response=======")
+    return probie, content
+
+
+def is_bundle(json_dict={}):
+    """
+    Check if resourceType = Bundle
+    :param json_dict:
+    :return: True \ False
+    """
+
+    if 'resourceType' in json_dict:
+        if json_dict['resourceType'].lower() == 'bundle':
+            return True
+
+    if type(json_dict) == 'list':
+        print("Type:%s\nLength:%s" % (type(json_dict), len(json_dict)))
+
+        if 'value' in json_dict[0]:
+            if json_dict[0]['value'].lower() == 'bundle':
+                return True
+
+    return False
+
+
+def get_entries(json_dict):
+    """
+    Get dict and look for entries
+
+    :param json_dict:
+
+    :return entry:
+    """
+
+    entry = []
+    seq = 0
+    for i in json_dict:
+        if i['name'].lower() == "entry":
+            # entry = i['value']
+            # entry = i
+            entry = get_fhir_list(i['value'],
+                                  parent_name="entry",
+                                  parent_seq="",
+                                  flatten=False)
+            # display output
+            # x = display_entry(entry)
+
+        seq += 1
+    return entry
+
+
+def get_content_text(content):
+    """
+    Get content from request and convert to text for context
+    :param content:
+    :return content_text:
+    """
+    if 'json' in content:
+        if content['json']:
+            content_text = json.dumps(content['json'], indent=JSON_INDENT)
+        else:
+            content_text = json.dumps(content, indent=JSON_INDENT)
+
+    else:
+        content_text = ""
+
+    return content_text
+
+
+def display_entry(entry):
+    """
+
+    :param entry:
+    :return:
+    """
+    for i in entry:
+        print("====entry:start====")
+        print("Name:%s [%s]Level:%s\n%s | %s " % (i['name'],
+                                                  i['type'],
+                                                  i['level'],
+                                                  i['pathName'],
+                                                  i['pathSeq']))
+        print("====entry:end====")
+    return
+
+
+def json_probe(deep_ref="", content_json={}):
+    """
+    Delve into a json document based on a pathName
+    e.g. entry.0.resource.resourceType
+    :param deep_ref:
+    :param content_json:
+    :return extracted_json:
+    """
+    # no json to deal with
+    if not content_json:
+        return
+
+    # nothing to select, return everything
+    if not deep_ref:
+        return content_json
+
+    # Now let's get selective
+
+    elements = deep_ref.split('.')
+
+    # print("Elements:%s" % elements)
+
+    extracted_json = {}
+    extracted_json = content_json
+    parent_key = ""
+    for e in elements:
+        # print("Checking: %s[%s]" % (e, type(e)))
+        extracted_json = json_probe_element(e, extracted_json, parent_key)
+        parent_key = e
+
+    # print("%s = %s" % (deep_ref, extracted_json))
+
+    return extracted_json
+
+
+def json_probe_element(e, element_json={}, parent_key=""):
+
+    element = {}
+    if is_number(e):
+        e_type = int(e)
+        # dealing with a list
+
+        if parent_key in element:
+            element[parent_key] = element_json[parent_key][e_type]
+
+
+    else:
+        e_type = e
+        # print("%s[%s]" % (e_type, type(e_type)))
+
+        if e_type in element_json:
+            if parent_key:
+                element[e_type] = element_json[parent_key][e_type]
+            else:
+                element[e_type] = element_json[e_type]
+            # for k, v in element_json.items():
+            #     if e_type == k:
+            #         print("%s:%s" % (k, v))
+            #
+            #         element[k] = v
+
+    # print("Leaving json_print_element")
+    # print(element)
+    return element

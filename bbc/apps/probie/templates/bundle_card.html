@@ -12,20 +12,14 @@
             {% include "display_string.html" %}
 
          {% else %}
-
            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ card_item.pathSeq }}" aria-expanded="true" aria-controls="collapse{{ card_item.pathSeq }}">
-
                {% if card_item.type == 'list' %}
-
                    {% include "display_list.html" %}
-
                {% else %}
-
                    {% include "display_dict.html" %}
-
                {% endif %}
             </button>
-         {% endif %}
+            {% endif %}
 
     </div>
     {% if card_item.type == 'dict' or card_item.type == 'list' %}

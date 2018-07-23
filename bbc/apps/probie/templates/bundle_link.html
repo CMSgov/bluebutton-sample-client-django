@@ -1,0 +1,17 @@
+{% load startswith %}
+{% load is_int %}
+<!-- templates/bundle_link.html:start -->
+<div class="row">
+ <div class="card col-sm-12">
+    <span>Bundle Navigation:
+    {% for l in link_uris %}
+       {% if l.url|startswith:settings.FHIR_BASE_ENDPOINT %}
+           <a href="/probie/geturlwithauth?url={{ l.url|urlencode:'' }}" >{% if l.relation == 'self' %}Reload this bundle{% else %}{{ l.relation }}{% endif %} <i class="fa fa-eye" aria-hidden="true"></i></a>
+       {% elif l.url|startswith:'http' %}
+           <a href="{{ l.url }}" >{{ l.relation }}&nbsp;<i class="fa fa-external-link" aria-hidden="true"></i></a>
+       {% else %}
+        {% endif %}&nbsp;|&nbsp;
+    {% endfor %}</span>
+ </div>
+</div>
+<!-- templates/bundle_link.html:end -->
