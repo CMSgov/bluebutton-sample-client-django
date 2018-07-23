@@ -12,7 +12,7 @@ Created by: '@ekivemark'
 """
 
 import json
-import jsonpath_rw_ext as jp
+import jsonpath_rw_ext as jpath
 
 
 def next_jpathname(parent_name, item):
@@ -30,20 +30,21 @@ def next_jpathname(parent_name, item):
     return pathname
 
 
-def next_jpathseq(parent_seq, seq):
-    """
-
-    :return:
-    """
-    if parent_seq in ['0', '0.', '.']:
-        pathseq = "%s" % (str(seq))
-    else:
-        pathseq = "%s.%s" % (parent_seq, str(seq))
-
-    return pathseq
-
-
-def probie_jdict(item, val, seq=0, ilist=[], parent_name="$", parent_seq="0"):
+# def next_jpathseq(parent_seq, seq):
+#     """
+#
+#     :return:
+#     """
+#     if parent_seq in ['0', '0.', '.']:
+#         pathseq = "%s" % (str(seq))
+#     else:
+#         pathseq = "%s.%s" % (parent_seq, str(seq))
+#
+#     return pathseq
+#
+#
+def probie_jdict(item, val, ilist=[], parent_name="$"):  # , parent_seq="0"):
+    # def probie_jdict(item, val, seq=0, ilist=[], parent_name="$"):  # , parent_seq="0"):
     """
     Receive item and value and return probie_dict
     :param item:
@@ -60,16 +61,18 @@ def probie_jdict(item, val, seq=0, ilist=[], parent_name="$", parent_seq="0"):
 
     o_dict['pathName'] = next_jpathname(parent_name, str(item))
 
-    # print("pathName:%s" % o_dict['pathName'])
+    # print("pathName:%s [parent:%s" % (o_dict['pathName'],parent_name))
     # pathSeq = next_jpathseq(parent_seq, seq)
 
     # o_dict['level'] =pathSeq.count(".")
-    o_dict['level'] = pathName.count('.') - 1
+    o_dict['level'] = o_dict['pathName'].count('.') - 1
+    # print("Level:%s" % o_dict['level'])
 
     return o_dict
 
 
-def get_fhir_jdict(idict={}, parent_name="$", parent_seq="0", flatten=True):
+def get_fhir_jdict(idict={}, parent_name="$", flatten=True):
+    # def get_fhir_jdict(idict={}, parent_name="$", parent_seq="0", flatten=True):
     """
     Pass in a dict and evaluate
     :param idict:
@@ -85,35 +88,72 @@ def get_fhir_jdict(idict={}, parent_name="$", parent_seq="0", flatten=True):
         if type(val) is dict:
             oo_list = get_fhir_jdict(val,
                                      next_jpathname(parent_name, str(item)),
-                                     next_jpathseq(parent_seq, seq),
+                                     # next_jpathseq(parent_seq, seq),
                                      flatten)
+            # print("In jdict with dict - Item:%s [parent:%s]" % (item, parent_name))
+            o = probie_jdict(item,
+                             val,
+                             # seq,
+                             oo_list,
+                             parent_name,
+                             # parent_seq
+                             )
+
         elif type(val) is list:
             # print("Item[type]:%s[%s]" % (item, type(item)))
             # print("List Parent:%s" % parent_name)
             oo_list = get_fhir_jlist(val,
-                                     next_jpathname(parent_name, str(item)),
-                                     next_jpathseq(parent_seq, seq),
+                                     next_jpathname(parent_name,
+                                                    str(item),
+                                                    ),
+                                     # next_jpathseq(parent_seq, seq),
                                      flatten)
+            # print("In jdict with list - Item:%s [parent:%s]" % (item, parent_name))
+
+            o = probie_jdict('[*]',
+                             # item,
+                             val,
+                             # seq,
+                             oo_list,
+                             parent_name,
+                             # parent_seq
+                             )
 
         elif type(val) is int:
             oo_list = []
-        else:
-            oo_list = []
-
-        if type(val) not 'list':
             o = probie_jdict(item,
                              val,
-                             seq,
+                             # seq,
                              oo_list,
                              parent_name,
-                             parent_seq)
+                             # parent_seq
+                             )
+
+        else:
+            oo_list = []
+            o = probie_jdict(item,
+                             val,
+                             # seq,
+                             oo_list,
+                             parent_name,
+                             # parent_seq
+                             )
+
+        if type(val) is not 'list':
+            o = probie_jdict(item,
+                             val,
+                             # seq,
+                             oo_list,
+                             parent_name,
+                             # parent_seq
+                             )
 
         # o = {}
         # o['name'] = item
         # o['type'] = type(val).__name__
         # o['value'] = val
         # o['pathName'] = parent_name + item
-        # o['pathSeq'] = "%s.%s" % (parent_seq, str(seq))
+        # # o['pathSeq'] = "%s.%s" % (parent_seq, str(seq))
 
         o_list.append(o)
         if flatten:
@@ -130,7 +170,8 @@ def get_fhir_jdict(idict={}, parent_name="$", parent_seq="0", flatten=True):
         return
 
 
-def get_fhir_jlist(ilist=[], parent_name="$", parent_seq="0", flatten=True):
+def get_fhir_jlist(ilist=[], parent_name="$", flatten=True):
+    # def get_fhir_jlist(ilist=[], parent_name="$", parent_seq="0", flatten=True):
     """
     Pass in list and evaluate
     :param ilist:
@@ -151,30 +192,37 @@ def get_fhir_jlist(ilist=[], parent_name="$", parent_seq="0", flatten=True):
                 oo_list = get_fhir_jdict(item,
                                          next_jpathname(parent_name,
                                                         "[%s]" % str(seq)),
-                                         next_jpathseq(parent_seq, seq),
+                                         # next_jpathseq(parent_seq, seq),
                                          flatten)
+                # print("In jlist with dict - Item:%s [parent:%s]" % (item, parent_name))
+
             else:
                 oo_list = get_fhir_jlist(item,
                                          next_jpathname(parent_name,
                                                         "[%s]" % str(seq)),
-                                         next_jpathseq(parent_seq, seq),
+                                         # next_jpathseq(parent_seq, seq),
                                          flatten)
+                # print("In jlist with list - Item:%s [parent:%s]" % (item, parent_name))
 
-            o_dict = probie_jdict(str(seq),
+            o_dict = probie_jdict('[*]',
+                                  # str(seq),
                                   item,
-                                  seq,
+                                  # seq,
                                   oo_list,
-                                  next_jpathname(parent_name, str(seq)),
-                                  next_jpathseq(parent_seq, seq))
+                                  parent_name,
+                                  # next_jpathname(parent_name, str(seq)),
+                                  # next_jpathseq(parent_seq, seq)
+                                  )
         else:
             # string
             # integer
             o_dict = probie_jdict(str(seq),
                                   item,
-                                  seq,
+                                  # seq,
                                   [],
                                   parent_name,
-                                  parent_seq)
+                                  # parent_seq
+                                  )
         o_list.append(o_dict)
         if flatten:
             if len(oo_list) > 0:
@@ -186,3 +234,15 @@ def get_fhir_jlist(ilist=[], parent_name="$", parent_seq="0", flatten=True):
     return o_list
 
 
+def get_jpath(path="$", fhir_json={}):
+    """
+
+    :param path:
+    :param fhir_json:
+    :return result:
+    """
+
+    if path == "$.":
+        return None
+
+    return jpath.match(path, fhir_json)

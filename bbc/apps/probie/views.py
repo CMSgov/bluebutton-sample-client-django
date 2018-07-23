@@ -88,7 +88,6 @@ def get_json_metadata(request):
     else:
         fe_d = {}
 
-
     context = {'name': PROBIE_NAME}
     context['target_url'] = url
     context['fe_dict'] = fe_d
@@ -172,7 +171,6 @@ def view_any_url(request, url):
         fe_d = probie['hierarchy']
     else:
         fe_d = {}
-
 
     context = {'name': PROBIE_NAME}
     context['target_url'] = url
@@ -319,8 +317,8 @@ def view_any_url_bundle(request, url):
 
             template_file = "bundle_f.html"
 
-    deep_ref = "entry.0.resource.resourceType"
-    element = json_probe(deep_ref, content['json'])
+    # deep_ref = "entry.0.resource.resourceType"
+    # element = json_probe(deep_ref, content['json'])
 
     # if 'flat' in probie:
     #     fe_slim = probie['flat']

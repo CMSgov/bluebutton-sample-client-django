@@ -12,7 +12,6 @@ Created by: '@ekivemark'
 """
 
 import json
-from objectpath import Tree
 
 from django.conf import settings
 from requests_oauthlib import OAuth2
@@ -377,9 +376,9 @@ def process_response(response):
                                                 parent_seq="0",
                                                 flatten=False)
             probie['flat'] = get_fhir_dict(response.json(),
-                                                parent_name="",
-                                                parent_seq="0",
-                                                flatten=True)
+                                           parent_name="",
+                                           parent_seq="0",
+                                           flatten=True)
 
             content = {'text': response.text,
                        'json': response.json(),
@@ -433,7 +432,6 @@ def process_response(response):
                    'json': '',
                    'error': '',
                    'status_code': response.status_code}
-
 
     print(response.status_code)
     print(response.json())
@@ -571,7 +569,6 @@ def json_probe_element(e, element_json={}, parent_key=""):
 
         if parent_key in element:
             element[parent_key] = element_json[parent_key][e_type]
-
 
     else:
         e_type = e
