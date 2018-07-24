@@ -395,11 +395,11 @@ def process_response(response):
                    'error': 'No read capability',
                    'status_code': response.status_code}
     elif response.status_code == 401:
-        print("We got a 401")
+        # print("We got a 401")
         content = {'text': response.text,
                    'status_code': response.status_code}
         if response.json():
-            print("We got json")
+            # print("We got json")
             content['json'] = response.json()
             if 'detail' in response.json():
                 content['error'] = '%s: %s' % (response.status_code,
@@ -411,7 +411,7 @@ def process_response(response):
             content['json'] = {}
             content['error'] = '%s ' \
                                'Error from the server' % response.status_code
-        print("Content%s" % content)
+        # print("Content%s" % content)
     elif response.status_code <= 500:
         content = {'text': response.text,
                    'status_code': response.status_code}
@@ -433,13 +433,13 @@ def process_response(response):
                    'error': '',
                    'status_code': response.status_code}
 
-    print(response.status_code)
-    print(response.json())
-    print(response.text)
-    print("==================")
-    print("Content%s" % content)
+    # print(response.status_code)
+    # print(response.json())
+    # print(response.text)
+    # print("==================")
+    # print("Content%s" % content)
 
-    print("===== leaving process response=======")
+    # print("===== leaving process response=======")
     return probie, content
 
 
@@ -455,7 +455,7 @@ def is_bundle(json_dict={}):
             return True
 
     if type(json_dict) == 'list':
-        print("Type:%s\nLength:%s" % (type(json_dict), len(json_dict)))
+        # print("Type:%s\nLength:%s" % (type(json_dict), len(json_dict)))
 
         if 'value' in json_dict[0]:
             if json_dict[0]['value'].lower() == 'bundle':
@@ -515,13 +515,14 @@ def display_entry(entry):
     :return:
     """
     for i in entry:
-        print("====entry:start====")
-        print("Name:%s [%s]Level:%s\n%s | %s " % (i['name'],
-                                                  i['type'],
-                                                  i['level'],
-                                                  i['pathName'],
-                                                  i['pathSeq']))
-        print("====entry:end====")
+        # print("====entry:start====")
+        # print("Name:%s [%s]Level:%s\n%s | %s " % (i['name'],
+        #                                           i['type'],
+        #                                           i['level'],
+        #                                           i['pathName'],
+        #                                           i['pathSeq']))
+        # print("====entry:end====")
+        pass
     return
 
 

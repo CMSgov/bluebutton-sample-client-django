@@ -34,11 +34,11 @@
       </div>
     </div>
 
-    <div class="container-fluid">
+    <h3 class="container-fluid">
         {% if fe_dict %}
 
-            <h3>Record Summary: {{ fe_dict.0.value }}</h3>
-        {% include "probie_card.html" with card_dict=fe_dict display_level=0 parent_path="0" %}
+        <h3>Record:</h3>
+            {% include "probie_card.html" with card_dict=fe_dict display_level=0 parent_path="0" %}
 
         {% endif %}
     </div>

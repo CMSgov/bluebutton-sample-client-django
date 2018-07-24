@@ -11,7 +11,7 @@ Created: 7/20/18 9:01 AM
 Created by: '@ekivemark'
 """
 
-import json
+# import json
 import jsonpath_rw_ext as jpath
 
 
@@ -30,21 +30,7 @@ def next_jpathname(parent_name, item):
     return pathname
 
 
-# def next_jpathseq(parent_seq, seq):
-#     """
-#
-#     :return:
-#     """
-#     if parent_seq in ['0', '0.', '.']:
-#         pathseq = "%s" % (str(seq))
-#     else:
-#         pathseq = "%s.%s" % (parent_seq, str(seq))
-#
-#     return pathseq
-#
-#
 def probie_jdict(item, val, ilist=[], parent_name="$"):  # , parent_seq="0"):
-    # def probie_jdict(item, val, seq=0, ilist=[], parent_name="$"):  # , parent_seq="0"):
     """
     Receive item and value and return probie_dict
     :param item:
@@ -62,9 +48,6 @@ def probie_jdict(item, val, ilist=[], parent_name="$"):  # , parent_seq="0"):
     o_dict['pathName'] = next_jpathname(parent_name, str(item))
 
     # print("pathName:%s [parent:%s" % (o_dict['pathName'],parent_name))
-    # pathSeq = next_jpathseq(parent_seq, seq)
-
-    # o_dict['level'] =pathSeq.count(".")
     o_dict['level'] = o_dict['pathName'].count('.') - 1
     # print("Level:%s" % o_dict['level'])
 
@@ -72,7 +55,6 @@ def probie_jdict(item, val, ilist=[], parent_name="$"):  # , parent_seq="0"):
 
 
 def get_fhir_jdict(idict={}, parent_name="$", flatten=True):
-    # def get_fhir_jdict(idict={}, parent_name="$", parent_seq="0", flatten=True):
     """
     Pass in a dict and evaluate
     :param idict:
@@ -88,15 +70,12 @@ def get_fhir_jdict(idict={}, parent_name="$", flatten=True):
         if type(val) is dict:
             oo_list = get_fhir_jdict(val,
                                      next_jpathname(parent_name, str(item)),
-                                     # next_jpathseq(parent_seq, seq),
                                      flatten)
             # print("In jdict with dict - Item:%s [parent:%s]" % (item, parent_name))
             o = probie_jdict(item,
                              val,
-                             # seq,
                              oo_list,
                              parent_name,
-                             # parent_seq
                              )
 
         elif type(val) is list:
@@ -106,46 +85,36 @@ def get_fhir_jdict(idict={}, parent_name="$", flatten=True):
                                      next_jpathname(parent_name,
                                                     str(item),
                                                     ),
-                                     # next_jpathseq(parent_seq, seq),
                                      flatten)
             # print("In jdict with list - Item:%s [parent:%s]" % (item, parent_name))
 
             o = probie_jdict('[*]',
-                             # item,
                              val,
-                             # seq,
                              oo_list,
                              parent_name,
-                             # parent_seq
                              )
 
         elif type(val) is int:
             oo_list = []
             o = probie_jdict(item,
                              val,
-                             # seq,
                              oo_list,
                              parent_name,
-                             # parent_seq
                              )
 
         else:
             oo_list = []
             o = probie_jdict(item,
                              val,
-                             # seq,
                              oo_list,
                              parent_name,
-                             # parent_seq
                              )
 
         if type(val) is not 'list':
             o = probie_jdict(item,
                              val,
-                             # seq,
                              oo_list,
                              parent_name,
-                             # parent_seq
                              )
 
         # o = {}
@@ -153,7 +122,6 @@ def get_fhir_jdict(idict={}, parent_name="$", flatten=True):
         # o['type'] = type(val).__name__
         # o['value'] = val
         # o['pathName'] = parent_name + item
-        # # o['pathSeq'] = "%s.%s" % (parent_seq, str(seq))
 
         o_list.append(o)
         if flatten:
@@ -171,7 +139,6 @@ def get_fhir_jdict(idict={}, parent_name="$", flatten=True):
 
 
 def get_fhir_jlist(ilist=[], parent_name="$", flatten=True):
-    # def get_fhir_jlist(ilist=[], parent_name="$", parent_seq="0", flatten=True):
     """
     Pass in list and evaluate
     :param ilist:
@@ -192,7 +159,6 @@ def get_fhir_jlist(ilist=[], parent_name="$", flatten=True):
                 oo_list = get_fhir_jdict(item,
                                          next_jpathname(parent_name,
                                                         "[%s]" % str(seq)),
-                                         # next_jpathseq(parent_seq, seq),
                                          flatten)
                 # print("In jlist with dict - Item:%s [parent:%s]" % (item, parent_name))
 
@@ -200,28 +166,23 @@ def get_fhir_jlist(ilist=[], parent_name="$", flatten=True):
                 oo_list = get_fhir_jlist(item,
                                          next_jpathname(parent_name,
                                                         "[%s]" % str(seq)),
-                                         # next_jpathseq(parent_seq, seq),
                                          flatten)
                 # print("In jlist with list - Item:%s [parent:%s]" % (item, parent_name))
 
             o_dict = probie_jdict('[*]',
                                   # str(seq),
                                   item,
-                                  # seq,
                                   oo_list,
                                   parent_name,
-                                  # next_jpathname(parent_name, str(seq)),
-                                  # next_jpathseq(parent_seq, seq)
                                   )
         else:
             # string
             # integer
+            # bool
             o_dict = probie_jdict(str(seq),
                                   item,
-                                  # seq,
                                   [],
                                   parent_name,
-                                  # parent_seq
                                   )
         o_list.append(o_dict)
         if flatten:

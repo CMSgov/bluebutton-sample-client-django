@@ -7,7 +7,11 @@
                 {% elif card_item.value|startswith:'http' %}
                    <a href="{{ card_item.value }}" target="_blank">{{ card_item.value }}&nbsp;<i class="fa fa-external-link" aria-hidden="true"></i></a>
                 {% else %}
-                    {{ card_item.value}}
+                    {% if card_item.type == 'bool' %}
+                        {% if card_item.value%}True{% else%}False{% endif %}
+                    {% else %}
+                        {{ card_item.value}}
+                    {% endif %}
                 {% endif %}
 </p>
 <!-- template/display_string.html:end -->

@@ -157,7 +157,7 @@ def view_any_url(request, url):
     :return:
     """
 
-    print("Made it to view any url endpoint")
+    # print("Made it to view any url endpoint")
 
     # first we get the OAuth token used to login
     auth = get_oauth_token(request)
@@ -255,7 +255,7 @@ def get_url_with_auth(request):
     """
 
     url = request.GET.get('url')
-    print("we got here with %s" % url)
+    # print("we got here with %s" % url)
 
     # return view_any_url(request, url)
     return view_any_url_bundle(request, url)
@@ -283,7 +283,7 @@ def view_any_url_bundle(request, url):
     :param url:
     :return:
     """
-    print("Made it to view bundle url endpoint")
+    # print("Made it to view bundle url endpoint")
 
     # first we get the OAuth token used to login
     auth = get_oauth_token(request)
@@ -316,19 +316,6 @@ def view_any_url_bundle(request, url):
             entry = get_entries(fe_d)
 
             template_file = "bundle_f.html"
-
-    # deep_ref = "entry.0.resource.resourceType"
-    # element = json_probe(deep_ref, content['json'])
-
-    # if 'flat' in probie:
-    #     fe_slim = probie['flat']
-    #     for s in fe_slim:
-    #         del s['subset']
-    # fe_slim_path = []
-    # for i in fe_slim:
-    #     if 'entry' in i['pathName']:
-    #         fe_slim_path.append(i['pathName'])
-    # print(fe_slim_path)
 
     context = {'name': PROBIE_NAME}
     context['target_url'] = url
