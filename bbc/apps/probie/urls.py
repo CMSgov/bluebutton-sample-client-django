@@ -19,7 +19,8 @@ from .views import (get_json_metadata,
                     get_by_url,
                     get_url_with_auth,
                     show_custom_view,
-                    get_custom_view)
+                    get_custom_view,
+                    show_field_view,)
 
 urlpatterns = [
     url(r'^getmetadata$',
@@ -37,5 +38,8 @@ urlpatterns = [
     url(r'^customview$',
         show_custom_view,
         name="probie_showcustomview"),
+    url(r'^fieldview$',
+        show_field_view,
+        name="probie_fieldview"),
 
 ]

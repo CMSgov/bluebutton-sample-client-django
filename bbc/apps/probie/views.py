@@ -42,7 +42,10 @@ from .utils import (get_fhir_dict,
                     get_entries,
                     get_content_text,
                     json_probe)
-from .forms import getUrlForm, getCustomViewForm
+from .fhirpath import get_fhir_jdict
+
+from .fhirbundle import get_full_bundle, get_jpath
+from .forms import getUrlForm, getCustomViewForm, getFieldViewForm
 from ..patient.views import build_fhir_urls
 from .settings_custom_view import CUSTOM_VIEW
 
@@ -299,6 +302,7 @@ def view_any_url_bundle(request, url):
         fe_d = {}
 
     entry = []
+    entry_fe_d = []
     template_file = "engine_f.html"
     bundle_info = {}
 
@@ -309,11 +313,33 @@ def view_any_url_bundle(request, url):
             bundle_info['link'] = content['json']['link']
             if int(bundle_info['total']) > 0:
                 bundle_info['entryType'] = content['json']['entry'][0]['resource']['resourceType']
-                bundle_info['entryCount'] = int(len(content['json']['entry']))
             else:
                 bundle_info['entryType'] = ""
                 bundle_info['entryCount'] = "0"
-            entry = get_entries(fe_d)
+            # entry = get_entries(fe_d)
+
+            entry = get_full_bundle(auth, url)
+
+            print("Initial Entries:%s" % len(content['json']['entry']))
+            content['json']['entry'] = entry
+            print("All Entries:%s" % len(content['json']['entry']))
+
+            probie['hierarchy'] = get_fhir_dict(content['json'],
+                                                parent_name="",
+                                                parent_seq="0",
+                                                flatten=False)
+            probie['flat'] = get_fhir_dict(content['json'],
+                                           parent_name="",
+                                           parent_seq="0",
+                                           flatten=True)
+            fe_d = probie['hierarchy']
+
+            # print(get_jpath("$.entry.[*].resource.item.[*].category.coding.[*].display", content['json']))
+
+            entry_fe_d = []
+            for f in fe_d:
+                if f['pathName'].startswith("entry"):
+                    entry_fe_d.append(f)
 
             template_file = "bundle_f.html"
 
@@ -324,10 +350,134 @@ def view_any_url_bundle(request, url):
         context['fe_flat'] = probie['flat']
     else:
         context['fe_flat'] = {}
-    context['entry'] = entry
+    context['entry'] = entry_fe_d
     context['bundle'] = bundle_info
     context['remote_status_code'] = response.status_code
     context['remote_content'] = get_content_text(content)
     context['What_is_a_Probie'] = PROBIE_DEF
     context['show_footnote'] = True
+    context['analyzer']= ['$.entry.[*].resource.item.[*].category.coding.[*].display',
+                          "$.entry.[*].resource.type.coding.[*].display"]
+    return render(request, template_file, context)
+
+
+@login_required
+def show_field_view(request):
+
+    # if this is a POST request we need to process the form data
+    # print("in get_by_url")
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = getFieldViewForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            # print("URL:%s" % form.cleaned_data['url'])
+            return field_view_url(request,
+                                  form.cleaned_data['url'],
+                                  form.cleaned_data['field_list'])
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        # print("Doing get in get_by_url")
+        form = getFieldViewForm(
+            initial={'url': 'https://sandbox.bluebutton.'
+                            'cms.gov/v1/fhir/ExplanationOfBenefit'
+                            '?patient=20140000003124',
+                     'field_list': '["$.entry.[*].resource.item.[*].category'
+                                   '.coding.[*].display","$.entry.[*].'
+                                   'resource.type'
+                                   '.coding.[*].display"]'})
+
+    return render(request, 'ask_for_custom_view.html', {'form': form})
+
+
+@login_required
+def field_view_url(request, url, field_list=""):
+    """
+    Get the url
+    :param request:
+    :param url:
+    :param field_list:
+    :return:
+    """
+    # print("Made it to field view url endpoint with ")
+    list_of_fields = json.loads(field_list)
+
+    # first we get the OAuth token used to login
+    auth = get_oauth_token(request)
+
+    logging.debug("calling FHIR Service with %s" % url)
+
+    response = requests.get(url, auth=auth)
+
+    # print(response.text)
+
+    probie, content = process_response(response)
+    if 'hierarchy' in probie:
+        fe_d = probie['hierarchy']
+    else:
+        fe_d = {}
+
+    entry = []
+    entry_fe_d = []
+    template_file = "engine_f.html"
+    bundle_info = {}
+
+    # print(template_file)
+    if fe_d:
+        # print("working through the bundle")
+        if is_bundle(content['json']):
+            bundle_info['resourceType'] = content['json']['resourceType']
+            bundle_info['total'] = content['json']['total']
+            bundle_info['link'] = content['json']['link']
+            if int(bundle_info['total']) > 0:
+                bundle_info['entryType'] = \
+                content['json']['entry'][0]['resource']['resourceType']
+            else:
+                bundle_info['entryType'] = ""
+                bundle_info['entryCount'] = "0"
+            # entry = get_entries(fe_d)
+
+            entry = get_full_bundle(auth, url)
+
+            # print("Initial Entries:%s" % len(content['json']['entry']))
+            content['json']['entry'] = entry
+            # print("All Entries:%s" % len(content['json']['entry']))
+
+            probie['hierarchy'] = get_fhir_jdict(content['json'],
+                                                 parent_name="$",
+                                                 flatten=False)
+            probie['flat'] = get_fhir_jdict(content['json'],
+                                            parent_name="$",
+                                            flatten=True)
+            fe_d = probie['hierarchy']
+
+            # print(get_jpath("$.entry.[*].resource.item.[*].category.coding.[*].display", content['json']))
+
+            entry_fe_d = []
+            for f in fe_d:
+                if f['pathName'].startswith("entry"):
+                    entry_fe_d.append(f)
+
+            template_file = "fields_f.html"
+
+    # print(len(fe_d))
+
+    context = {'name': PROBIE_NAME}
+    context['target_url'] = url
+    context['fe_dict'] = fe_d
+    if 'flat' in probie:
+        context['fe_flat'] = probie['flat']
+    else:
+        context['fe_flat'] = {}
+    context['entry'] = entry_fe_d
+    context['bundle'] = bundle_info
+    context['remote_status_code'] = response.status_code
+    context['remote_content'] = get_content_text(content)
+    context['What_is_a_Probie'] = PROBIE_DEF
+    context['show_footnote'] = True
+    context['analyzer'] = list_of_fields
     return render(request, template_file, context)

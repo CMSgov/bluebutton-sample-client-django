@@ -3,9 +3,6 @@
 {% load startswith %}
 {% load is_int %}
 {% block extra_head %}
-<script>
-$('#example').tooltip(options)
-</script>
 
 {% endblock %}
 {% block Content %}
@@ -41,7 +38,7 @@ $('#example').tooltip(options)
     <div class="container-fluid">
         {% if fe_dict %}
             {% if bundle %}
-                <h3>{{ bundle.resourceType}} of {{ bundle.entryCount }} (of Total:{{ bundle.total }}) {{ bundle.entryType }} records</h3>
+                <h3>{{ bundle.resourceType}} of {{ bundle.total }} records</h3>
 
                 {% if bundle.link %}
                     {% include "bundle_link.html" with link_uris=bundle.link %}
@@ -53,16 +50,16 @@ $('#example').tooltip(options)
                 <h3>Record Summary: {{ fe_dict.0.value }} of {{ fe_dict.5.value }} {{ fe_dict.7.entry.0.resource.resourceType }} records</h3>
             {% endif %}
 
-            {% include "bundle_card.html" with card_dict=fe_dict display_level=1 parent_path="entry" %}
+            {% include "bundle_analysis.html" %}
 
         {% endif %}
     </div>
 
     {% include "display_all_json.html" %}
 
-  </div>
+    {% include "display_probie_flat.html" %}
 
-  {% include "bundle_analysis.html" %}
+  </div>
 
   <div class="col-sm-12 card-footer">
     {{ What_is_a_Probie|safe }}
