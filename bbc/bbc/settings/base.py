@@ -14,7 +14,7 @@ import os
 
 from django.contrib.messages import constants as messages
 
-from .utils import bool_env 
+from .utils import bool_env
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.join(BASE_DIR, '..')
@@ -166,8 +166,8 @@ SOCIAL_AUTH_OAUTH2IO_KEY = ''
 SOCIAL_AUTH_OAUTH2IO_SECRET = ''
 SOCIAL_AUTH_OAUTH2IO_SCOPE = []
 # experimenting with setting name
-SOCIAL_AUTH_OAUTH2IO_NAME="oauth2io"
-SOCIAL_AUTH_OAUTH2IO_STATE_PARAMETER=True
+SOCIAL_AUTH_OAUTH2IO_NAME = "oauth2io"
+SOCIAL_AUTH_OAUTH2IO_STATE_PARAMETER = True
 
 # Redirect_uri to be used in your target server is:
 #

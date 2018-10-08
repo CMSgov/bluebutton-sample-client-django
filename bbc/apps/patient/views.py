@@ -185,8 +185,6 @@ def build_url(path=""):
     # print("base=%s" % settings.FHIR_HOST)
 
     url = base_url + path
-
-
     # print("path URL", url)
 
     return url
