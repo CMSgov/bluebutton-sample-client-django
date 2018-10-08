@@ -161,19 +161,36 @@ AUTHENTICATION_BACKENDS = (
 
 # python-social-auth settings
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_URL_ENTRY = 'social-auth'
 SOCIAL_AUTH_OAUTH2IO_KEY = ''
 SOCIAL_AUTH_OAUTH2IO_SECRET = ''
 SOCIAL_AUTH_OAUTH2IO_SCOPE = []
-OAUTH2IO_HOST = "https://dev.bluebutton.cms.fhirservice.net"
+# experimenting with setting name
+SOCIAL_AUTH_OAUTH2IO_NAME="oauth2io"
+SOCIAL_AUTH_OAUTH2IO_STATE_PARAMETER=True
+
+# Redirect_uri to be used in your target server is:
+#
+
+OAUTH2IO_HOST = "https://sandbox.bluebutton.cms.gov/v1"
 OAUTH2_PROVIDER_NAME = "CMS"
 APP_TITLE = "Blue Button Client Example"
 SOCIAL_AUTH_ALWAYS_ASSOCIATE = True
 # the trailing slash is necessary, because python-social-auth does not follow
 # redirects by default.
+# TRAILING_SLASH = False
+# SOCIAL_AUTH_TRAILING_SLASH = TRAILING_SLASH
+FHIR_HOST = OAUTH2IO_HOST + '/fhir'
+
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_ERROR_URL = '/accounts/login-error'
 HOSTNAME_URL = "http://bbc:8001"
+
+# Redirect_uri to be used in your target server is:
+# HOSTNAME_URL + SOCIAL_AUTH_URL_ENTRY + '/complete/' + SOCIAL_AUTH_OAUTH2IO_NAME + '/'
+
+# http://localhost:8001/social-auth/complete/oauth2io/
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
