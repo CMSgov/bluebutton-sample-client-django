@@ -6,6 +6,8 @@ Blue Button Sample Client Application - Django Version
 This client demonstrates authenticating to the Blue Buttom API and subsequent FHIR API calls.
 It demonstrates the OAuth2 Server Side web application flow where a `client_secret` is used.
 
+This client has been upgraded to Django 1.11.16.
+
 ## Status and Contributing
 
 The application is in active development so check back often for updates.
@@ -13,13 +15,12 @@ Please consider improving this code with your contributions. Pull requests welco
 
 ## Basic Setup
 
-    git clone https://github.com/HHSIDEAlab/django_bluebutton_client.git
+    git clone https://github.com/cmsgov/bluebutton-sample-client-django.git
     cd django_blubutton_client/bbc
 
 While not required, using `virtualenv` is a good idea. 
 The following commands work for Python 3+. Please search `virtualenv` 
 to fine eqivilent commands to install and setup `virtualenv` for Python 2.7.
-
 
     python -m venv venv
     source venv/bin/activate
@@ -28,9 +29,11 @@ The following command assumes a `virtualenv` was created and activated.
 If you aren't using `virtualenv`, then you may need to put `sudo` in 
 front of the following `pip` command.
 
-    pip install -r requirements/requirements.in
+    pip install -r requirements/requirements.txt
     cp bbc/settings/local_sample.py bbc/settings/local.py
     python manage.py migrate --settings bbc.settings.local
+    python manage.py createsuperuser --settings bbc.settings.local
+
 
 ### Configuring Your Development Application
 
@@ -62,13 +65,13 @@ the values for:
 
 Finally, you're ready to execute
 
-    python manage.py runserver --settings bbc.settings.local
+    python manage.py runserver --settings bbc.settings.local --insecure
 
 And from here, you can navigate to http://localhost:8000 and test your application.
 
 ## Other Settings
 
-  *  `OAUTH2IO_HOST`   - the default is `https://dev.bluebutton.cms.fhirservice.net`
+  *  `OAUTH2IO_HOST`   - the default is `https://sandbox.bluebutton.cms.gov`
   *  `EXTERNAL_AUTH_NAME` - the default is `CMS`.
 
 If you change the `OAUTH2IO_HOST` to something non https (for testing), then you need to
