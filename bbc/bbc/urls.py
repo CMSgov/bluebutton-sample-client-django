@@ -13,15 +13,18 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
+from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 admin.autodiscover()
+
+SOCIAL_AUTH_REDIRECTOR = getattr(settings, 'SOCIAL_AUTH_URL_ENTRY', 'social-auth')
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('apps.accounts.urls')),
     url(r'^patient/', include('apps.patient.urls')),
-    url(r'^social-auth/', include('social.apps.django_app.urls', namespace='social')),
+    url(r'^' + SOCIAL_AUTH_REDIRECTOR + '/', include('social.apps.django_app.urls', namespace='social')),
     url(r'^', include('apps.home.urls')),
 
 ]

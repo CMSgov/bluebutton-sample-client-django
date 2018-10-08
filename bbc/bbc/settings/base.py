@@ -161,11 +161,18 @@ AUTHENTICATION_BACKENDS = (
 
 # python-social-auth settings
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_URL_ENTRY = 'social-auth'
 SOCIAL_AUTH_OAUTH2IO_KEY = ''
 SOCIAL_AUTH_OAUTH2IO_SECRET = ''
 SOCIAL_AUTH_OAUTH2IO_SCOPE = []
-OAUTH2IO_HOST = "https://sandbox.bluebutton.cms.gov"
+# experimenting with setting name
+SOCIAL_AUTH_OAUTH2IO_NAME="oauth2io"
+SOCIAL_AUTH_OAUTH2IO_STATE_PARAMETER=True
 
+# Redirect_uri to be used in your target server is:
+#
+
+OAUTH2IO_HOST = "https://sandbox.bluebutton.cms.gov/v1"
 FHIR_BASE_ENDPOINT = "%s/v1/fhir/" % (OAUTH2IO_HOST)
 USER_INFO_ENDPOINT = "%s/v1/connect/userinfo/" % (OAUTH2IO_HOST)
 FHIR_METADATA_URI = "%smetadata" % (FHIR_BASE_ENDPOINT)
@@ -176,10 +183,19 @@ APP_TITLE = "Blue Button Client Example"
 SOCIAL_AUTH_ALWAYS_ASSOCIATE = True
 # the trailing slash is necessary, because python-social-auth does not follow
 # redirects by default.
+# TRAILING_SLASH = False
+# SOCIAL_AUTH_TRAILING_SLASH = TRAILING_SLASH
+FHIR_HOST = OAUTH2IO_HOST + '/fhir'
+
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_ERROR_URL = '/accounts/login-error'
 HOSTNAME_URL = "http://bbc:8001"
+
+# Redirect_uri to be used in your target server is:
+# HOSTNAME_URL + SOCIAL_AUTH_URL_ENTRY + '/complete/' + SOCIAL_AUTH_OAUTH2IO_NAME + '/'
+
+# http://localhost:8001/social-auth/complete/oauth2io/
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
@@ -201,7 +217,8 @@ SOCIAL_AUTH_PIPELINE = (
 SETTINGS_EXPORT = [
     'OAUTH2_PROVIDER_NAME',
     'OAUTH2IO_HOST',
-    'APP_TITLE',
+    'FHIR_HOST',
+    'APP_TITLE'
     'USER_INFO_ENDPOINT',
     'OIDC_DISCOVERY_URI',
     'FHIR_METADATA_URI',

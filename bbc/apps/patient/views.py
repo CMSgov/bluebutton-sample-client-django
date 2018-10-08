@@ -43,12 +43,14 @@ def bbof_get_userinfo(request):
     url = getattr(settings, 'USER_INFO_ENDPOINT',
                   "https://sandbox.bluebutton.cms.gov/v1/connect/userinfo")
     token = request.user.social_auth.get(provider='oauth2io').access_token
-    auth = OAuth2(
-        settings.SOCIAL_AUTH_OAUTH2IO_KEY,
-        token={
-            'access_token': token,
-            'token_type': 'Bearer'
-        })
+
+    auth = OAuth2(settings.SOCIAL_AUTH_OAUTH2IO_KEY,
+                  token={'access_token': token, 'token_type': 'Bearer'})
+
+    # now we construct the url
+    url = build_url('/ExplanationOfBenefit/')
+
+    # next we call the remote api
     response = requests.get(url, auth=auth)
 
     if response.status_code in (200, 404):
@@ -75,17 +77,15 @@ def bbof_get_patient(request, patient_id=None):
 
     # first we get the token used to login
     token = request.user.social_auth.get(provider='oauth2io').access_token
-    auth = OAuth2(
-        settings.SOCIAL_AUTH_OAUTH2IO_KEY,
-        token={
-            'access_token': token,
-            'token_type': 'Bearer'
-        })
+
+    auth = OAuth2(settings.SOCIAL_AUTH_OAUTH2IO_KEY,
+                  token={'access_token': token, 'token_type': 'Bearer'})
+
+    # now we construct the url
+    url = build_url('/Coverage/?_format=json')
+
     # next we call the remote api
-    url = urls['patient']
-
-    logging.debug("calling FHIR Service with %s" % url)
-
+    # patient = % s? request.user.username
     response = requests.get(url, auth=auth)
 
     if response.status_code in (200, 404):
@@ -111,14 +111,18 @@ def bbof_get_eob(request, patient_id=None):
     context = {'name': 'Blue Button on FHIR'}
     # first we get the token used to login
     token = request.user.social_auth.get(provider='oauth2io').access_token
-    auth = OAuth2(
-        settings.SOCIAL_AUTH_OAUTH2IO_KEY,
-        token={
-            'access_token': token,
-            'token_type': 'Bearer'
-        })
-    urls = build_fhir_urls(patient_id)
-    response = requests.get(urls['eob'], auth=auth)
+
+    auth = OAuth2(settings.SOCIAL_AUTH_OAUTH2IO_KEY,
+                  token={'access_token': token, 'token_type': 'Bearer'})
+
+    # now we construct the url
+    url = build_url('/Patient/?_format=json')
+
+    # % (request.user.username)
+    # next we call the remote api
+    logging.debug("calling FHIR Service with %s" % url)
+
+    response = requests.get(url, auth=auth)
 
     if response.status_code in (200, 404):
         if response.json():
@@ -214,5 +218,23 @@ def bbof_get_fhir(request, resource_type, patient):
 
     context['remote_status_code'] = response.status_code
     context['remote_content'] = content
-    context['patient'] = patient
-    return render(request, 'bbof.html', context)
+
+    return render(request, 'response.html', context)
+
+
+def build_url(path=""):
+    """
+    construct the url to make the remote call
+    :param path:
+    :return: url
+    """
+
+    base_url = settings.FHIR_HOST
+    # print("base=%s" % settings.FHIR_HOST)
+
+    url = base_url + path
+
+
+    # print("path URL", url)
+
+    return url

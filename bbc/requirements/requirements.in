@@ -1,4 +1,4 @@
-Django<2.0
+Django==1.11.16
 django-bootstrap-form
 django-localflavor
 python-social-auth
