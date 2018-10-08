@@ -1,6 +1,6 @@
 from .base import *    # noqa # pylint: disable=unused-import
 
-OAUTH2IO_HOST = "https://dev.bluebutton.cms.fhirservice.net"
+OAUTH2IO_HOST = "https://sandbox.bluebutton.cms.gov"
 OAUTH2_PROVIDER_NAME = "CMS"
 
 SOCIAL_AUTH_OAUTH2IO_KEY = ''
