@@ -14,7 +14,7 @@ import os
 
 from django.contrib.messages import constants as messages
 
-from .utils import bool_env 
+from .utils import bool_env
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.join(BASE_DIR, '..')
@@ -173,6 +173,11 @@ SOCIAL_AUTH_OAUTH2IO_STATE_PARAMETER=True
 #
 
 OAUTH2IO_HOST = "https://sandbox.bluebutton.cms.gov/v1"
+FHIR_BASE_ENDPOINT = "%s/v1/fhir/" % (OAUTH2IO_HOST)
+USER_INFO_ENDPOINT = "%s/v1/connect/userinfo/" % (OAUTH2IO_HOST)
+FHIR_METADATA_URI = "%smetadata" % (FHIR_BASE_ENDPOINT)
+OIDC_DISCOVERY_URI = "%s/.well-known/openid-configuration" % (OAUTH2IO_HOST)
+
 OAUTH2_PROVIDER_NAME = "CMS"
 APP_TITLE = "Blue Button Client Example"
 SOCIAL_AUTH_ALWAYS_ASSOCIATE = True
@@ -200,6 +205,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.get_username',
     'social_core.pipeline.mail.mail_validation',
     'social_core.pipeline.user.create_user',
+    'apps.accounts.oauth_backends.pipeline.patient_id.save_profile',
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.debug.debug',
     'social_core.pipeline.social_auth.load_extra_data',
@@ -213,4 +219,10 @@ SETTINGS_EXPORT = [
     'OAUTH2IO_HOST',
     'FHIR_HOST',
     'APP_TITLE'
+    'USER_INFO_ENDPOINT',
+    'OIDC_DISCOVERY_URI',
+    'FHIR_METADATA_URI',
 ]
+
+# Set the default Encoding standard. typically 'utf-8'
+ENCODING = 'utf-8'
