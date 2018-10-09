@@ -1,11 +1,7 @@
-<<<<<<< HEAD
 from django.test import TestCase  # noqa
-=======
-from django.test import TestCase
 from django.test.client import Client
 from django.core.urlresolvers import reverse
 from django.conf import settings
->>>>>>> master
 
 
 class LoginTestCase(TestCase):
