@@ -24,6 +24,10 @@ def bbof_get_eob(request):
     context = {'name': 'Blue Button on FHIR'}
     # first we get the token used to login
     token = request.user.social_auth.get(provider='oauth2io').access_token
+<<<<<<< HEAD
+=======
+
+>>>>>>> 535784fa8d78fd14dd8bb4c8a1e6eb815402bfba
     auth = OAuth2(settings.SOCIAL_AUTH_OAUTH2IO_KEY,
                   token={'access_token': token, 'token_type': 'Bearer'})
 
@@ -58,6 +62,10 @@ def bbof_get_coverage(request):
     context = {'name': 'Blue Button on FHIR'}
     # first we get the token used to login
     token = request.user.social_auth.get(provider='oauth2io').access_token
+<<<<<<< HEAD
+=======
+
+>>>>>>> 535784fa8d78fd14dd8bb4c8a1e6eb815402bfba
     auth = OAuth2(settings.SOCIAL_AUTH_OAUTH2IO_KEY,
                   token={'access_token': token, 'token_type': 'Bearer'})
 
@@ -92,6 +100,10 @@ def bbof_get_patient(request):
     context = {'name': 'Blue Button on FHIR'}
     # first we get the token used to login
     token = request.user.social_auth.get(provider='oauth2io').access_token
+<<<<<<< HEAD
+=======
+
+>>>>>>> 535784fa8d78fd14dd8bb4c8a1e6eb815402bfba
     auth = OAuth2(settings.SOCIAL_AUTH_OAUTH2IO_KEY,
                   token={'access_token': token, 'token_type': 'Bearer'})
 
@@ -171,6 +183,10 @@ def djmongo_write(request):
         content = {'error': 'server error'}
     context['remote_status_code'] = response.status_code
     context['remote_content'] = content
+<<<<<<< HEAD
+=======
+
+>>>>>>> 535784fa8d78fd14dd8bb4c8a1e6eb815402bfba
     return render(request, 'response.html', context)
 
 
