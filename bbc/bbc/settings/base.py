@@ -173,14 +173,11 @@ SOCIAL_AUTH_OAUTH2IO_STATE_PARAMETER = True
 #
 
 OAUTH2IO_HOST = "https://sandbox.bluebutton.cms.gov/v1"
-<<<<<<< HEAD
-=======
 FHIR_BASE_ENDPOINT = "%s/v1/fhir/" % (OAUTH2IO_HOST)
 USER_INFO_ENDPOINT = "%s/v1/connect/userinfo/" % (OAUTH2IO_HOST)
 FHIR_METADATA_URI = "%smetadata" % (FHIR_BASE_ENDPOINT)
 OIDC_DISCOVERY_URI = "%s/.well-known/openid-configuration" % (OAUTH2IO_HOST)
 
->>>>>>> 535784fa8d78fd14dd8bb4c8a1e6eb815402bfba
 OAUTH2_PROVIDER_NAME = "CMS"
 APP_TITLE = "Blue Button Client Example"
 SOCIAL_AUTH_ALWAYS_ASSOCIATE = True
@@ -221,10 +218,7 @@ SETTINGS_EXPORT = [
     'OAUTH2IO_HOST',
     'FHIR_HOST',
     'APP_TITLE'
-<<<<<<< HEAD
-=======
     'USER_INFO_ENDPOINT',
     'OIDC_DISCOVERY_URI',
     'FHIR_METADATA_URI',
->>>>>>> 535784fa8d78fd14dd8bb4c8a1e6eb815402bfba
 ]
