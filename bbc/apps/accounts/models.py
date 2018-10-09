@@ -1,13 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # vim: ai ts=4 sts=4 et sw=4
-<<<<<<< HEAD
-from django.db import models  # noqa
-=======
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from django.conf import settings
-from django.db import models
+from django.db import models  # noqa
 from django.utils.encoding import python_2_unicode_compatible
 
 
@@ -28,4 +25,3 @@ class UserProfile(models.Model):
         return '%s %s (%s)' % (self.user.first_name,
                                self.user.last_name,
                                self.user.username)
->>>>>>> master
