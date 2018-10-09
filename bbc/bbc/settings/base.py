@@ -14,7 +14,7 @@ import os
 
 from django.contrib.messages import constants as messages
 
-from .utils import bool_env 
+from .utils import bool_env
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.join(BASE_DIR, '..')
@@ -166,13 +166,18 @@ SOCIAL_AUTH_OAUTH2IO_KEY = ''
 SOCIAL_AUTH_OAUTH2IO_SECRET = ''
 SOCIAL_AUTH_OAUTH2IO_SCOPE = []
 # experimenting with setting name
-SOCIAL_AUTH_OAUTH2IO_NAME="oauth2io"
-SOCIAL_AUTH_OAUTH2IO_STATE_PARAMETER=True
+SOCIAL_AUTH_OAUTH2IO_NAME = "oauth2io"
+SOCIAL_AUTH_OAUTH2IO_STATE_PARAMETER = True
 
 # Redirect_uri to be used in your target server is:
 #
 
 OAUTH2IO_HOST = "https://sandbox.bluebutton.cms.gov/v1"
+FHIR_BASE_ENDPOINT = "%s/v1/fhir/" % (OAUTH2IO_HOST)
+USER_INFO_ENDPOINT = "%s/v1/connect/userinfo/" % (OAUTH2IO_HOST)
+FHIR_METADATA_URI = "%smetadata" % (FHIR_BASE_ENDPOINT)
+OIDC_DISCOVERY_URI = "%s/.well-known/openid-configuration" % (OAUTH2IO_HOST)
+
 OAUTH2_PROVIDER_NAME = "CMS"
 APP_TITLE = "Blue Button Client Example"
 SOCIAL_AUTH_ALWAYS_ASSOCIATE = True
@@ -213,4 +218,7 @@ SETTINGS_EXPORT = [
     'OAUTH2IO_HOST',
     'FHIR_HOST',
     'APP_TITLE'
+    'USER_INFO_ENDPOINT',
+    'OIDC_DISCOVERY_URI',
+    'FHIR_METADATA_URI',
 ]
