@@ -6,7 +6,7 @@ from unittest import skipIf
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
-from django.test import TestCase, override_settings
+from django.test import TestCase, override_settings  # noqa
 
 from apps.test import BaseApiTest
 

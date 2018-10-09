@@ -18,6 +18,7 @@ from django.utils.translation import ugettext_lazy as _
 
 __author__ = "Alan Viars"
 
+
 @login_required
 def my_logout(request):
     logout(request)

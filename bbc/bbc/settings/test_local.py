@@ -1,4 +1,5 @@
-from .base import *
+from .base import *  # noqa
+import os
 
 # this is the client id of the application used to obtain tokens
 # with the password flow in the integration tests.
@@ -12,5 +13,5 @@ TEST_INTEGRATION_WRITE_CLIENT_ID = 'test_app_write'
 
 # this env variable is needed by oauthlib to disable the SSL
 # check while testing, because the testing server doesn't use SSL
-import os
+
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'

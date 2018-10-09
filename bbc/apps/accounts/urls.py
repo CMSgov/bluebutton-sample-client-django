@@ -6,5 +6,5 @@ from .views import my_logout
 
 
 urlpatterns = [
-    url(r'^logout', my_logout,  name="logout"),
+    url(r'^logout', my_logout, name="logout"),
 ]

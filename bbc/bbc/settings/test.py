@@ -1,4 +1,4 @@
-from .base import *
+from .base import *  # noqa
 
 OAUTH2IO_HOST = "https://dev.bluebutton.cms.fhirservice.net"
 OAUTH2_PROVIDER_NAME = "CMS"
