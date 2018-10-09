@@ -23,7 +23,6 @@ SOCIAL_AUTH_REDIRECTOR = getattr(settings, 'SOCIAL_AUTH_URL_ENTRY', 'social-auth
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('apps.accounts.urls')),
-    # url(r'^remote/', include('apps.remotecalls.urls')),
     url(r'^patient/', include('apps.patient.urls')),
     url(r'^' + SOCIAL_AUTH_REDIRECTOR + '/', include('social.apps.django_app.urls', namespace='social')),
     url(r'^', include('apps.home.urls')),
