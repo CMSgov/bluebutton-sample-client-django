@@ -38,7 +38,7 @@ front of the following `pip` command.
 ### Configuring Your Development Application
 
 By default, your application will be set up to use the public OAuth service
-at https://dev.bluebutton.cms.fhirservice.net/. In order to use this version of
+at https://sandbox.bluebutton.cms.gov. In order to use this version of
 the service, you'll need to request an account on that site. So select Account ->
 "Request an Invite," fill out the form, setting user type to "Developer," and
 we'll get back to you as soon as possible.
@@ -82,7 +82,7 @@ tell the oauthlib to operate in an insecure mode like so.
 
 ## Running the Tests
 
-To run the tests against https://dev.bluebutton.cms.fhirservice.net use:
+To run the tests against https://sandbox.bluuebutton.cms.gov use:
 
     python manage.py test --settings=bbc.settings.test
 
