@@ -10,16 +10,4 @@ urlpatterns = [
     url(r'^Coverage$', bbof_get_coverage, name="bbof_get_coverage"),
     url(r'^Patient$', bbof_get_patient, name="bbof_get_patient"),
 
-    # url(r'^UserInfo$', bbof_get_userinfo, name="bbof_get_userinfo"),
-    # url(r'^Patient/(?P<patient_id>[^/]+)$',
-    #     bbof_get_patient,
-    #     name="bbof_get_patient"),
-    # url(r'^fhir-resource//(?P<fhir_resource>[^/]+)$',
-    #     bbof_get_fhir,
-    #     name="bbof_get_fhir"),
-    # url(r'^ExplanationOfBenefit/', bbof_get_eob, name="bbof_get_eob_search"),
-    # url(r'^Coverage/(?P<patient_id>[^/]+)$',
-    #     bbof_get_coverage,
-    #     name="bbof_get_coverage"),
-
 ]
