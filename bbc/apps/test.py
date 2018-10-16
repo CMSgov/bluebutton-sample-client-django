@@ -99,7 +99,7 @@ class BaseApiTest(TestCase):
             username, password=password, **extra_fields)
         return user
 
-    #@skipUnless(can_reach_server(), "Requires access to server.")
+    # @skipUnless(can_reach_server(), "Requires access to server.")
     # def _get_test_access_token(self, client_id):
     #     """
     #     Helper method that returns an access token from the test server.
@@ -120,6 +120,3 @@ class BaseApiTest(TestCase):
     #         token_url=self.token_url,
     #         username=username, password=password, client_id=client_id)
     #     return token.get('access_token')
-
-
-
