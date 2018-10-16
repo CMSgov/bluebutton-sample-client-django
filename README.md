@@ -6,7 +6,7 @@ Blue Button Sample Client Application - Django Version
 This client demonstrates authenticating to the Blue Buttom API and subsequent FHIR API calls.
 It demonstrates the OAuth2 Server Side web application flow where a `client_secret` is used.
 
-This client has been upgraded to Django 1.11.16.
+This client has been upgraded to Python 3 with Django 1.11.16.
 
 ## Status and Contributing
 
