@@ -1,0 +1,27 @@
+{% load i18n %}
+{% load startswith %}
+{% load is_int %}
+<!-- display_probie_flat:start-->
+    <div class="card">
+    <div class="card-header" id="headingProbie">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseProbie" aria-expanded="true" aria-controls="collapseProbie">
+            <h3>Show me all the field paths...</h3>
+        </button>
+      </h5>
+    </div>
+
+    <div id="collapseProbie" class="collapse" aria-labelledby="headingProbie" data-parent="#accordion">
+      <div class="card-body">
+    <div class="row text-left">
+        <div class="col-lg-12">
+            {% for p in fe_flat %}
+                <p>{% for i in "x"|rjust:p.level %}&nbsp;&nbsp;&nbsp;&nbsp;{% endfor %}
+                    {{ p.pathName }}</p>
+            {% endfor %}
+	    </div>
+
+      </div>
+    </div>
+  </div>
+<!-- display_probie_flat.html:end-->

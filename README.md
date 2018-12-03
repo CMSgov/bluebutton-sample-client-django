@@ -62,13 +62,15 @@ the values for:
 
 Finally, you're ready to execute
 
-    python manage.py runserver --settings bbc.settings.local
+    python manage.py runserver --settings bbc.settings.local  --insecure
+
+The --insecure option ensures that static files are loaded when running locally.
 
 And from here, you can navigate to http://localhost:8000 and test your application.
 
 ## Other Settings
 
-  *  `OAUTH2IO_HOST`   - the default is `https://dev.bluebutton.cms.fhirservice.net`
+  *  `OAUTH2IO_HOST`   - the default is `https://sandbox.bluebutton.cms.gov `
   *  `EXTERNAL_AUTH_NAME` - the default is `CMS`.
 
 If you change the `OAUTH2IO_HOST` to something non https (for testing), then you need to
@@ -79,7 +81,7 @@ tell the oauthlib to operate in an insecure mode like so.
 
 ## Running the Tests
 
-To run the tests against https://dev.bluebutton.cms.fhirservice.net use:
+To run the tests against https://sandbox.bluebutton.cms.gov use:
 
     python manage.py test --settings=bbc.settings.test
 

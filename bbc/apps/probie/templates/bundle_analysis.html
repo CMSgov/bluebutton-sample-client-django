@@ -1,0 +1,16 @@
+{% load jpath %}
+<div class="container-fluid">
+    {% for a_item in analyzer %}
+
+        <div id="row">
+          <div class="card-header col-sm" id="heading{{ card_item.pathSeq }}">
+              <div class="col col-sm">
+                  <b>{{ a_item }}</b> has {{ remote_content|jpath:a_item|length }} items</b>
+              </div>
+              <div class="col col-sm col-sm-9">
+                  {{ remote_content|jpath:a_item }}
+              </div>
+          </div>
+        </div>
+    {% endfor %}
+</div>

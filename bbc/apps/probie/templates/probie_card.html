@@ -1,0 +1,32 @@
+{% load is_int %}
+{% load startswith %}
+
+{% for card_item in card_dict %}
+
+<div id="accordion col-sm-12">
+  <div class="card">
+    <div class="card-header col-sm-12" id="heading{{ card_item.pathSeq }}">
+
+        {% if card_item.type == 'str' or card_item.type == 'int' or card_item.type == 'float' or card_item.type == 'bool' %}
+
+            {% include "display_string.html" %}
+
+         {% else %}
+           <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ card_item.pathSeq }}" aria-expanded="true" aria-controls="collapse{{ card_item.pathSeq }}">
+               {% if card_item.type == 'list' %}
+                   {% include "display_list.html" %}
+               {% else %}
+                   {% include "display_dict.html" %}
+               {% endif %}
+            </button>
+            {% endif %}
+
+    </div>
+    {% if card_item.type == 'dict' or card_item.type == 'list' %}
+       {% include "display_sub_dict_list.html" %}
+
+     {% endif %}
+  </div>
+ </div>
+
+{% endfor %}

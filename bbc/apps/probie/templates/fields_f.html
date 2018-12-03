@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load startswith %}
+{% load is_int %}
+{% block extra_head %}
+
+{% endblock %}
+{% block Content %}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-12">
+	      <ol class="breadcrumb">
+	        <li class="active"><a href="/probie/">{{ name }}</a></li>
+              &nbsp;|&nbsp;
+            <li class="active"><a href="/probie/getbyurl">Get By URL</a></li>
+          </ol>
+        </div>
+     </div>
+
+    <div class="row">
+       <div class="card col-lg-12">
+        <p><span class="h6">Target URI
+            </span>:
+                <a href="/probie/geturlwithauth?url={{ target_url|urlencode:'' }}" target="_blank">
+                    {{ target_url }}</a></p>
+       </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-lg-10">
+        {% include "include/messages.html" %}
+      </div>
+    </div>
+
+    <div class="container-fluid">
+        {% if fe_dict %}
+            {% if bundle %}
+                <h3>{{ bundle.resourceType}} of {{ bundle.total }} records</h3>
+
+                {% if bundle.link %}
+                    {% include "bundle_link.html" with link_uris=bundle.link %}
+                {% endif %}
+
+                <h3>{{ bundle.entryType }} records</h3>
+
+            {% else %}
+                <h3>Record Summary: {{ fe_dict.0.value }} of {{ fe_dict.5.value }} {{ fe_dict.7.entry.0.resource.resourceType }} records</h3>
+            {% endif %}
+
+            {% include "bundle_analysis.html" %}
+
+        {% endif %}
+    </div>
+
+    {% include "display_all_json.html" %}
+
+    {% include "display_probie_flat.html" %}
+
+  </div>
+
+  <div class="col-sm-12 card-footer">
+    {{ What_is_a_Probie|safe }}
+  </div>
+
+</div><!-- /.container -->
+
+{% endblock %}
+

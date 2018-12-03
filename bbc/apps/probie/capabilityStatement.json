@@ -1,0 +1,111 @@
+{
+    "resourceType": "CapabilityStatement",
+    "status": "active",
+    "date": "2018-05-26T01:10:18-04:00",
+    "publisher": "Centers for Medicare & Medicaid Services",
+    "kind": "instance",
+    "software": {
+        "name": "Blue Button API: Direct",
+        "version": "1.0.0-SNAPSHOT"
+    },
+    "implementation": {
+        "description": "gov.hhs.cms.bluebutton.fhir:bluebutton-server-app"
+    },
+    "fhirVersion": "3.0.1",
+    "acceptUnknown": "extensions",
+    "format": [
+        "appliction/json"
+    ],
+    "rest": [
+        {
+            "mode": "server",
+            "resource": [
+                {
+                    "type": "Coverage",
+                    "profile": {
+                        "reference": "http://hl7.org/fhir/Profile/Coverage"
+                    },
+                    "interaction": [
+                        {
+                            "code": "read"
+                        },
+                        {
+                            "code": "search-type"
+                        }
+                    ],
+                    "searchParam": [
+                        {
+                            "name": "beneficiary",
+                            "type": "reference",
+                            "documentation": "Covered party"
+                        }
+                    ]
+                },
+                {
+                    "type": "ExplanationOfBenefit",
+                    "profile": {
+                        "reference": "http://hl7.org/fhir/Profile/ExplanationOfBenefit"
+                    },
+                    "interaction": [
+                        {
+                            "code": "read"
+                        },
+                        {
+                            "code": "search-type"
+                        }
+                    ],
+                    "searchParam": [
+                        {
+                            "name": "patient",
+                            "type": "reference",
+                            "documentation": "The reference to the patient"
+                        }
+                    ]
+                },
+                {
+                    "type": "Patient",
+                    "profile": {
+                        "reference": "http://hl7.org/fhir/Profile/Patient"
+                    },
+                    "interaction": [
+                        {
+                            "code": "read"
+                        },
+                        {
+                            "code": "search-type"
+                        }
+                    ],
+                    "searchParam": [
+                        {
+                            "name": "_id",
+                            "type": "token",
+                            "documentation": "The ID of the resource"
+                        },
+                        {
+                            "name": "identifier",
+                            "type": "token",
+                            "documentation": "A patient identifier"
+                        }
+                    ]
+                }
+            ],
+            "security": {
+                "extension": [
+                    {
+                        "url": "http://fhir-registry.smarthealthit.org/StructureDefinition/oauth-uris",
+                        "extension": [
+                            {
+                                "url": "token",
+                                "valueUri": "https://sandbox.bluebutton.cms.gov/v1/o/token/"
+                            },
+                            {
+                                "url": "authorize",
+                                "valueUri": "https://sandbox.bluebutton.cms.gov/v1/o/authorize/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}

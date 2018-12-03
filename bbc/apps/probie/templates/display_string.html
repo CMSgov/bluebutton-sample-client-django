@@ -1,0 +1,17 @@
+{% load is_int %}
+{% load startswith %}
+<!-- template/display_string.html:start -->
+            <p>{% if not card_item.name|is_int %}<span class="h6" data-toggle="tooltip" title="{{ card_item.pathName }}"> {{ card_item.name }}</span>: {% endif %}
+                {% if card_item.value|startswith:settings.FHIR_BASE_ENDPOINT %}
+                  <i class="fa fa-eye" aria-hidden="true"></i> <a href="/probie/geturlwithauth?url={{ card_item.value|urlencode:'' }}" target="_blank">{{ card_item.value }}</a><
+                {% elif card_item.value|startswith:'http' %}
+                   <a href="{{ card_item.value }}" target="_blank">{{ card_item.value }}&nbsp;<i class="fa fa-external-link" aria-hidden="true"></i></a>
+                {% else %}
+                    {% if card_item.type == 'bool' %}
+                        {% if card_item.value%}True{% else%}False{% endif %}
+                    {% else %}
+                        {{ card_item.value}}
+                    {% endif %}
+                {% endif %}
+</p>
+<!-- template/display_string.html:end -->
