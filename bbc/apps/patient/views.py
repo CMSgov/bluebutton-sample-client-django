@@ -19,6 +19,24 @@ from requests_oauthlib import OAuth2
 logger = logging.getLogger('hhs_server.%s' % __name__)
 
 
+def build_fhir_urls(patient_id=None, since_date=None):
+    result = {}
+    base = getattr(settings, 'FHIR_BASE_ENDPOINT',
+                   "https://sandbox.bluebutton.cms.gov/v1/fhir/")
+    eob_search = urljoin(base, "ExplanationOfBenefit/")
+    result['eob_search'] = eob_search
+    patient_search = urljoin(base, "Patient/")
+    result['patient_search'] = patient_search
+
+    if patient_id:
+        result['coverage'] = urljoin(base,
+                                     "Coverage/?beneficiary=%s" % (patient_id))
+        result['eob'] = urljoin(base, "ExplanationOfBenefit/?patient=%s" %
+                                (patient_id))
+        result['patient'] = urljoin(base, "Patient/%s" % (patient_id))
+    return result
+
+
 @login_required
 def bbof_get_eob(request):
     context = {'name': 'Blue Button on FHIR'}
@@ -185,7 +203,6 @@ def build_url(path=""):
     # print("base=%s" % settings.FHIR_HOST)
 
     url = base_url + path
-
 
     # print("path URL", url)
 
