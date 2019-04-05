@@ -46,7 +46,7 @@ def bbof_get_eob(request):
                   token={'access_token': token, 'token_type': 'Bearer'})
 
     # now we construct the url
-    url = build_url('/ExplanationOfBenefit/')
+    url = build_url('/ExplanationOfBenefit/?_format=json')
 
     # next we call the remote api
     response = requests.get(url, auth=auth)

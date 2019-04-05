@@ -38,7 +38,7 @@ Please refer to the <a href="https://hhsidealab.github.io/bluebutton-developer-h
 	    <div class="row">
         <div class="col-lg-12">
 			<h1>Explanation of Benefit</h1>
-<a href="{%url 'bbof_get_eob' %}"><button type="button" class="btn btn-primary">{{settings.FHIR_HOST}}/ExplanationOfBenefit/?patient={{request.user.username}}&_format=json</button> </a>
+<a href="{%url 'bbof_get_eob' %}"><button type="button" class="btn btn-primary">{{settings.FHIR_HOST}}/ExplanationOfBenefit/?_format=json</button> </a>
 		   
         </div>
       </div>
@@ -46,7 +46,7 @@ Please refer to the <a href="https://hhsidealab.github.io/bluebutton-developer-h
 			    <div class="row">
         <div class="col-lg-12">
 			<h1>Patient</h1>
-<a href="{%url 'bbof_get_patient' %}"><button type="button" class="btn btn-primary">{{settings.FHIR_HOST}}/Patient/{{request.user.username}}?_format=json</button> </a>
+<a href="{%url 'bbof_get_patient' %}"><button type="button" class="btn btn-primary">{{settings.FHIR_HOST}}/Patient/?_format=json</button> </a>
 		  
 
         </div>
@@ -54,14 +54,14 @@ Please refer to the <a href="https://hhsidealab.github.io/bluebutton-developer-h
 	    <div class="row">
         <div class="col-lg-12">
 			<h1>Coverage</h1>
-<a href="{%url 'bbof_get_coverage' %}"><button type="button" class="btn btn-primary">{{settings.FHIR_HOST}}/Coverage/?patient={{request.user.username}}&_format=json</button> </a>
+<a href="{%url 'bbof_get_coverage' %}"><button type="button" class="btn btn-primary">{{settings.FHIR_HOST}}/Coverage/?_format=json</button> </a>
 
         </div>
       </div>
 	    <div class="row">
         <div class="col-lg-12">
 			<h1>FHIR Metadata</h1>
-<a href="{{settings.FHIR_HOST}}/metadata"><button type="button" class="btn btn-primary">{{settings.FHIR_HOST}}/metadata/&_format=json</button> </a>
+<a href="{{settings.FHIR_HOST}}/metadata?_format=json"><button type="button" class="btn btn-primary">{{settings.FHIR_HOST}}/metadata?_format=json</button> </a>
 
         </div>
       </div>
