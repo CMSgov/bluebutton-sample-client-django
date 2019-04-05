@@ -106,6 +106,53 @@ def bbof_get_coverage(request):
 
 
 @login_required
+def bbof_get_fhir(request, resource_type, patient):
+    context = {'name': 'Blue Button on FHIR'}
+    # first we get the token used to login
+    token = request.user.social_auth.get(provider='oauth2io').access_token
+    auth = OAuth2(
+        settings.SOCIAL_AUTH_OAUTH2IO_KEY,
+        token={
+            'access_token': token,
+            'token_type': 'Bearer'
+        })
+    # next we call the remote api
+    endpoint = '/v1/fhir/%s/?%s=59b99cd030c49e0001481f44&_format=json' % (
+        resource_type, patient)
+
+    url = urljoin(
+        getattr(settings, 'OAUTH2IO_HOST',
+                "https://sandbox.bluebutton.cms.gov"), endpoint)
+    print(url)
+    # % (request.user.username)
+
+    logging.debug("calling FHIR Service with %s" % url)
+
+    response = requests.get(url, auth=auth)
+
+    if response.status_code in (200, 404):
+        if response.json():
+            content = json.dumps(response.json(), indent=4)
+        else:
+            content = {'error': 'problem reading content.'}
+    elif response.status_code == 403:
+        content = {'error': 'No read capability'}
+        content = response.content
+    elif response.status_code <= 500:
+        content = {
+            'error': '500 Error from the server.',
+            'status_code': response.status_code
+        }
+        content = response.content
+    else:
+        content = response.content
+
+    context['remote_status_code'] = response.status_code
+    context['remote_content'] = content
+    context['patient'] = patient
+    return render(request, 'bbof.html', context)
+
+@login_required
 def bbof_get_patient(request):
     context = {'name': 'Blue Button on FHIR'}
     # first we get the token used to login
