@@ -14,6 +14,19 @@ __author__ = "Alan Viars"
 
 @login_required
 def my_logout(request):
+    # applying fix for non-admin user
+    removed = False
+    u = request.user
+    u_n = request.user.username
+
+    if not u.is_staff:
+        # remove this non-staff user account on logout
+        u.delete()
+        removed = True
+
     logout(request)
-    messages.success(request, _("You have been logged out."))
+    if removed:
+        messages.success(request, _("Temporary account removed for %s." % u_n))
+    else:
+        messages.success(request, _("You have been logged out."))
     return HttpResponseRedirect(reverse('home'))

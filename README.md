@@ -6,7 +6,7 @@ Blue Button Sample Client Application - Django Version
 This client demonstrates authenticating to the Blue Buttom API and subsequent FHIR API calls.
 It demonstrates the OAuth2 Server Side web application flow where a `client_secret` is used.
 
-This client has been upgraded to Django 1.11.20.
+This client has been upgraded to Django 1.11.22.
 
 ## Status and Contributing
 
@@ -22,13 +22,14 @@ While not required, using `virtualenv` is a good idea.
 The following commands work for Python 3+. Please search `virtualenv` 
 to fine eqivilent commands to install and setup `virtualenv` for Python 2.7.
 
-    python -m venv venv
-    source venv/bin/activate
+    python -m venv env
+    source env/bin/activate
 
 The following command assumes a `virtualenv` was created and activated. 
 If you aren't using `virtualenv`, then you may need to put `sudo` in 
 front of the following `pip` command.
 
+    pip install --upgrade pip
     pip install -r requirements/requirements.txt
     cp bbc/settings/local_sample.py bbc/settings/local.py
     python manage.py migrate --settings bbc.settings.local
@@ -38,7 +39,7 @@ front of the following `pip` command.
 ### Configuring Your Development Application
 
 By default, your application will be set up to use the public OAuth service
-at https://dev.bluebutton.cms.fhirservice.net/. In order to use this version of
+at https://sandbox.bluebutton.cms.gov/. In order to use this version of
 the service, you'll need to request an account on that site. So select Account ->
 "Request an Invite," fill out the form, setting user type to "Developer," and
 we'll get back to you as soon as possible.
@@ -82,7 +83,7 @@ tell the oauthlib to operate in an insecure mode like so.
 
 ## Running the Tests
 
-To run the tests against https://dev.bluebutton.cms.fhirservice.net use:
+To run the tests against https://sandbox.bluebutton.cms.gov use:
 
     python manage.py test --settings=bbc.settings.test
 
