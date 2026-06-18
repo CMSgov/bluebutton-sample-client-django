@@ -172,7 +172,7 @@ SOCIAL_AUTH_OAUTH2IO_STATE_PARAMETER = True
 # Redirect_uri to be used in your target server is:
 #
 
-OAUTH2IO_HOST = "https://sandbox.bluebutton.cms.gov/v1"
+OAUTH2IO_HOST = "https://sandbox.bluebutton.cms.gov"
 OAUTH2_PROVIDER_NAME = "CMS"
 APP_TITLE = "Blue Button Client Example"
 SOCIAL_AUTH_ALWAYS_ASSOCIATE = True
@@ -180,7 +180,7 @@ SOCIAL_AUTH_ALWAYS_ASSOCIATE = True
 # redirects by default.
 # TRAILING_SLASH = False
 # SOCIAL_AUTH_TRAILING_SLASH = TRAILING_SLASH
-FHIR_HOST = OAUTH2IO_HOST + '/fhir'
+FHIR_HOST = OAUTH2IO_HOST + '/v1/fhir'
 
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'
